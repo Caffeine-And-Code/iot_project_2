@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitoraggio Serial</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div id="columnView">
+      <h1>Dati dalla Porta Seriale</h1>
+      <div id="data">Caricamento...</div>
+    </div>
+    <section class="tanica" id="svgLiquid">
+      <svg
+        id="svgWaves"
+        width="70%"
+        height="600px"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/
+          svg"
+      >
+        <defs></defs>
+        <path id="myID" d="" />
+      </svg>
+      <div class="statusBar">
+        <h4>-100%</h4>
+        <h4>-75%</h4>
+        <h4>-50%</h4>
+        <h4>-25%</h4>
+        <h4>-0%</h4>
+      </div>
+    </section>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.1.1/gsap.min.js"
+      integrity="sha256-cyEXrJKj03YNkpCjPxVBd¡7pR]3EF+okm1oN9Qc4rRY="
+      crossorigin="
+    anonymous"
+    ></script>
+
+    <script src="static/wavify.js"></script>
+
+    <script src="/static/script.js"></script>
+  </body>
+</html>
