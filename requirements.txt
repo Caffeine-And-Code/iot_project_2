@@ -1,3 +1,6 @@
 Pillow
-flask
+# flask
 pyserial
+PyQt5
+PyQtWebEngine
+python-dotenv
