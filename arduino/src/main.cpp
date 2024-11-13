@@ -1,24 +1,35 @@
 #include <Arduino.h>
+#include "Led.h"
+#include "Button.h"
+#include "sensors/PIR.h"
+#include "sensors/Temperature.h"
+#include "sensors/UltrasoundProximity.h"
+#include "outputs/LCDMonitor.h"
+#include "sensors/ServoMotor.h"
 
-// put function declarations here:
-int myFunction(int, int);
+Led *led;
+Button *button;
+PIR *pir;
+Temperature *temperature;
+UltrasoundProximity *ultrasound;
+LCDMonitor *monitor;
+ServoMotor *motor;
 
-int result;
 void setup()
 {
   // put your setup code here, to run once:
-  result = myFunction(2, 3);
+  // led = new Led(4);
+  // button = new Button(5);
+  // temperature = new Temperature(A0);
+  // ultrasound = new UltrasoundProximity(7, 8, temperature);
+  // monitor = new LCDMonitor(0x27, 4, 20);
+  motor = new ServoMotor(9);
   Serial.begin(9600);
 }
 
 void loop()
 {
-  // put your main code here, to run repeatedly:
-  Serial.print(result);
-}
-
-// put function definitions here:
-int myFunction(int x, int y)
-{
-  return x + y;
+  motor->open();
+  delay(2000);
+  motor->close();
 }

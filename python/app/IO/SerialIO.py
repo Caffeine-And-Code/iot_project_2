@@ -19,7 +19,7 @@ class SerialIO(InterfaceIO):
 
     def listen_runtime(self, messageQueue: queue.Queue, readQueue: queue.Queue):
         # Initialize the serial connection
-        with Serial(config.serialPort, config.baudRate, timeout=1) as ser:
+        with Serial(config.serialPort, config.baudRate, timeout=0.1) as ser:
             while True:
                 line = ser.readline().decode('utf-8').strip()
                 
