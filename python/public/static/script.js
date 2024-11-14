@@ -1,5 +1,48 @@
-var myWave
+//on load actions 
+document.addEventListener("DOMContentLoaded", function() {
+    adjustPositions();
+    // inizialize the local storage
+    localStorage.setItem("storicoTemp", JSON.stringify([]));
+    localStorage.setItem("storicoLevel", JSON.stringify([]));
+});
 
+// Chart Logic
+let Temp = new Chart("TempChart",{
+    type: "line",
+    data:{
+
+    }
+})
+
+let Level = new Chart("LevelChart",{
+    type: "line",
+    data:{
+
+    }
+})
+
+function updateCharts(){
+    let TempStorico = JSON.parse(localStorage.getItem("storicoTemp")) || [];
+    let LevelStorico = JSON.parse(localStorage.getItem("storicoLevel")) || [];
+    Temp.data.labels = TempStorico.map((_, i) => i);
+    Temp.data.datasets = [{
+        label: "Temperature",
+        data: TempStorico,
+        borderColor: "red",
+        fill: false
+    }];
+    Temp.update();
+    Level.data.labels = LevelStorico.map((_, i) => i);
+    Level.data.datasets = [{
+        label: "Fluid Level",
+        data: LevelStorico,
+        borderColor: "blue",
+        fill: false
+    }];
+    Level.update();
+}
+
+var myWave
 let bridge;
 
 function initializeWebChannel() {
@@ -15,6 +58,8 @@ function initializeWebChannel() {
         });
     });
 }
+
+// Get & Set data from python backend
 
 function getDataFromJson(pyData){
     return pyData;
@@ -43,9 +88,20 @@ function receiveMessageFromPython(message) {
 
 document.addEventListener("DOMContentLoaded", initializeWebChannel);
 
+function saveDataIntoStorico(value){
+    let storico = JSON.parse(localStorage.getItem("storicoTemp")) || [];
+    storico.push(value.temperature);
+    localStorage.setItem("storicoTemp", JSON.stringify(storico));
+    storico = JSON.parse(localStorage.getItem("storicoLevel")) || [];
+    storico.push(value.fluidLevel);
+    localStorage.setItem("storicoLevel", JSON.stringify(storico));
+}
+
 function updateValue(value) {
+    saveDataIntoStorico(value);
     let fluidLevel = value.fluidLevel;
     document.getElementById('liquidLevel').innerText = fluidLevel + "%";
+    adjustPositions();
     
     myWave && myWave.kill();
     myWave = wavify(document.querySelector("#myID"), {
@@ -58,6 +114,9 @@ function updateValue(value) {
     let temperature = value.temperature;
 
     setTemperature(temperature);
+
+
+    updateCharts();
 }
 
 function convertPercentageToValueForTheWave(percentage) {
@@ -104,4 +163,50 @@ function setTemperature(value) {
 	temperature.dataset.value = value + units[config.unit];
 }
 
+function adjustPositions() {
+    let text = document.getElementById("liquidLevel");
+    let wave = document.getElementById("svgWaves");
+    let waveContainer = document.getElementById("svgLiquid");
+
+    // position the test in the middle of the wave
+
+    // get the height of the wave
+    let waveHeight = wave.clientHeight;
+    let textHeight = text.clientHeight;
+    let waveContainerWidth = waveContainer.clientWidth;
+
+    // calculate the top position of the text
+    let topPosition = Math.floor((waveHeight - textHeight) / 2);
+
+    // set the top position of the text
+    text.style.top = `${topPosition}px`;
+
+    // calculate the left position of the text
+    let waveWidth = wave.clientWidth;
+    let textWidth = text.clientWidth;
+
+    let leftPosition = waveWidth / 2;
+    let marginLeft = (waveContainerWidth - waveWidth) / 2;
+
+    leftPosition += marginLeft - textWidth / 2;
+
+    text.style.left = `${leftPosition}px`;
+
+    let coverage = document.getElementById("coverage");
+
+    // set the top position of the coverage
+    coverage.style.height = "40px";
+    coverage.style.width = waveWidth + 11 + "px";
+
+    // set the left position of the coverage
+
+    let coverageLeftPosition =
+        Math.floor((waveContainerWidth - waveWidth) / 2) - 5;
+    coverage.style.left = `${coverageLeftPosition}px`;
+
+    coverage.style.top = `100px`;
+}
 askLoop()
+
+
+

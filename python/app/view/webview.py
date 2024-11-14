@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWebChannel import QWebChannel
+from PyQt5 import QtWidgets
 
 from app.view.webviewCore import Bridge
 
@@ -11,12 +12,17 @@ class WebViewBuilder:
     def __init__(self):
         self.url = ""
         self.title = ""
-        self.geometry = {"ax":100, "ay":100, "aw":800, "ah":800 }
         self.onNewMessage = lambda x: print(x)
         self.jsListenFunction = "receiveMessageFromPython"
         self.window = None
         self.browser = None
         self.initialized = False
+        # ax: x position, ay: y position, aw: width, ah: height
+        # get the screen size and set the window to the center of the screen
+        app = QtWidgets.QApplication(sys.argv)
+        size = app.primaryScreen().size()
+        rect = app.primaryScreen().availableGeometry()        
+        self.geometry = {"ax":0, "ay":0, "aw":rect.width()-100, "ah":rect.height()-100 }
 
     def setUrlFromLocalFile(self, url):
         self.url = QUrl.fromLocalFile(url)
