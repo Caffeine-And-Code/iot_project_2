@@ -11,7 +11,7 @@ class WebViewBuilder:
     def __init__(self):
         self.url = ""
         self.title = ""
-        self.geometry = {"ax":100, "ay":100, "aw":800, "ah":600 }
+        self.geometry = {"ax":100, "ay":100, "aw":800, "ah":800 }
         self.onNewMessage = lambda x: print(x)
         self.jsListenFunction = "receiveMessageFromPython"
         self.window = None

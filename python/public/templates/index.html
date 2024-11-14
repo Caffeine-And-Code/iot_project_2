@@ -9,30 +9,27 @@
 
   </head>
   <body>
-    <div id="columnView">
-      <h1>Dati dalla Porta Seriale</h1>
-      <div id="data">Caricamento...</div>
-    </div>
-    <section class="tanica" id="svgLiquid">
-      <svg
-        id="svgWaves"
-        width="70%"
-        height="600px"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/
-          svg"
-      >
-        <defs></defs>
-        <path id="myID" d="" />
-      </svg>
-      <div class="statusBar">
-        <h4>-100%</h4>
-        <h4>-75%</h4>
-        <h4>-50%</h4>
-        <h4>-25%</h4>
-        <h4>-0%</h4>
+    <div class="DataContainer">
+      <section class="tanica" id="svgLiquid">
+        <svg
+          id="svgWaves"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/
+            svg"
+        >
+          <defs></defs>
+          <path id="myID" d="" />
+        </svg>
+        <h1 class="liquidLevel" id="liquidLevel"></h1>
+      </section>
+  
+      <div id="wrapper">	
+        <div id="termometer">
+          <div id="temperature" style="height:0" data-value="0°C"></div>
+          <div id="graduations"></div>
+        </div>
       </div>
-    </section>
+    </div>
 
     <script src="./../static/gsap.min.js"></script>
 
