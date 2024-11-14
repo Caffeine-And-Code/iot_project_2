@@ -14,7 +14,7 @@ protected:
     int currentStateIndex = 0;
 
 public:
-    StateMachine(Controller *controller, int currentState = 0);
+    StateMachine(Controller *controller);
 
     void addState(int stateId, void (*callback)());
 

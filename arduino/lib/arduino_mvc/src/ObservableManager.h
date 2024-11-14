@@ -13,7 +13,10 @@ class ObservableManager
     int currentIndex = 0;
 
 public:
-    ObservableManager(Controller *Controller) : controller(controller) {}
+    ObservableManager(Controller *Controller)
+    {
+        this->controller = controller;
+    }
     void addObservable(Observable *observable);
     void update();
 };

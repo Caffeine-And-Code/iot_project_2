@@ -1,9 +1,10 @@
 #include <Arduino.h>
 #include "AppController.h"
-#include "enums/States.h"
+#include "config/Config.h"
 
 void setup()
 {
+    Serial.begin(BAUDRATE);
     controller.setup();
 }
 

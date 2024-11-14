@@ -22,6 +22,7 @@ public:
     void start();
 
     void restart();
+    void stop();
 
     void update();
 };

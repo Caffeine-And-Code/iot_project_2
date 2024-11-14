@@ -5,16 +5,13 @@ LCDMonitor::LCDMonitor(uint8_t lcdAddr, int rows, int columns)
 {
     this->rows = rows;
     this->columns = columns;
-    this->monitor = new LiquidCrystal_I2C(lcdAddr, rows, columns);
+    this->monitor = new LiquidCrystal_I2C(lcdAddr, columns, rows);
     this->monitor->init();
     this->monitor->backlight();
 }
 
 void LCDMonitor::print(int row, int col, String chars, bool withClean = false)
 {
-    Serial.println(row);
-    Serial.println(col);
-    Serial.println(chars);
     for (int i = 0; i < col && withClean; i++)
     {
         this->monitor->setCursor(i, row);

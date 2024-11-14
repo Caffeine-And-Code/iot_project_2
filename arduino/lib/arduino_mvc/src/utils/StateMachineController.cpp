@@ -1,8 +1,9 @@
 #include "StateMachineController.h"
+#include "Arduino.h"
 
-StateMachineController::StateMachineController(int currentState)
+StateMachineController::StateMachineController()
 {
-    this->stateMachine = new StateMachine(this, currentState);
+    this->stateMachine = new StateMachine(this);
 }
 void StateMachineController::addState(int stateId, void (*callback)())
 {

@@ -12,6 +12,17 @@ public:
         this->printCentered("PRESS OPEN", 1);
         this->printCentered("TO ENTER WASTE", 2);
     }
+
+    void empty()
+    {
+        this->monitor->noBacklight();
+        this->clean();
+    }
+
+    void wakeUp()
+    {
+        this->monitor->backlight();
+    }
 };
 
 #endif

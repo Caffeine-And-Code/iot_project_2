@@ -29,6 +29,11 @@ void Timer::restart()
     this->lastCheckMillis = millis();
 }
 
+void Timer::stop()
+{
+    this->running = false;
+}
+
 void Timer::update()
 {
     if (this->running && this->lastCheckMillis + this->time < millis())

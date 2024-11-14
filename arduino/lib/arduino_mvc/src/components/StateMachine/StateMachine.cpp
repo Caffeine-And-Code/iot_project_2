@@ -1,8 +1,10 @@
 #include "StateMachine.h"
+#include "Arduino.h"
 
-StateMachine::StateMachine(Controller *controller, int currentState = 0) : Component(controller)
+StateMachine::StateMachine(Controller *controller) : Component(controller)
 {
-    this->currentState = currentState;
+    this->currentState = -1;
+    this->currentStateIndex = 0;
 }
 
 void StateMachine::addState(int stateId, void (*callback)())
@@ -11,6 +13,7 @@ void StateMachine::addState(int stateId, void (*callback)())
     {
         this->states[this->currentStateIndex] = stateId;
         this->stateCallbacks[this->currentStateIndex] = callback;
+        this->currentStateIndex++;
     }
 }
 
@@ -21,9 +24,10 @@ void StateMachine::changeState(int stateId)
     {
         if (this->states[i] == stateId)
         {
-            this->controller->triggerEvent(new ChangeStateEvent(
-                this->states[this->currentState], this->states[i]));
+            auto lastState = this->currentState;
             this->currentState = i;
+            this->controller->triggerEvent(new ChangeStateEvent(
+                this->states[lastState], this->states[i]));
             break;
         }
         i++;
@@ -32,5 +36,6 @@ void StateMachine::changeState(int stateId)
 
 void StateMachine::update()
 {
-    this->stateCallbacks[this->currentState]();
+    if (this->currentState >= 0 && this->currentState < this->currentStateIndex)
+        this->stateCallbacks[this->currentState]();
 }

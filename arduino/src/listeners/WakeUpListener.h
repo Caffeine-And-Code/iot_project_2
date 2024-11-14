@@ -1,15 +1,15 @@
-#ifndef __SLEEP_TIMER_LISTENER__
-#define __SLEEP_TIMER_LISTENER__
+#ifndef __WAKE_UP_LISTENER__
+#define __WAKE_UP_LISTENER__
 #include "Listener.h"
 #include "AppController.h"
 #include "Controller.h"
 
-class SleepTimerListener : public Listener
+class WakeUpListener : public Listener
 {
     void execute(Event *event, Controller *controller)
     {
         auto *appController = static_cast<AppController *>(controller);
-        appController->changeState(Sleep);
+        appController->changeState(Available);
     }
 };
 
