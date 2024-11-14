@@ -11,9 +11,9 @@ class Controller:
     def __init__(self):
         self.view = View(self.onNewMessage)
         if config.useVirtualSerial:
-            self.serialIO = SerialIO.SerialIO(self.onNewSerialMessage)
-        else:
             self.serialIO = TestIO.TestIO(self.onNewSerialMessage)
+        else:
+            self.serialIO = SerialIO.SerialIO(self.onNewSerialMessage)
         self.model = Model(self.sendMessage, self.serialIO)
         self.serialIO.listen()
 

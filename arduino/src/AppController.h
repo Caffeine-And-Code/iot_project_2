@@ -17,6 +17,7 @@ void doorOpenRoutine();
 void fullRoutine();
 void emptyingRoutine();
 void maxTemperatureRoutine();
+void onPIRTrigger();
 
 class AppController : public StateMachineController
 {
@@ -28,22 +29,7 @@ public:
     UserLCD *userLCD;
     Timer *sleepTimer;
 
-    AppController() : StateMachineController(Available) {}
-    void setup()
-    {
-        this->addState(Available, availableRoutine);
-        this->addState(Sleep, sleepRouting);
-        this->addState(DoorOpen, doorOpenRoutine);
-        this->addState(Full, fullRoutine);
-        this->addState(Emptying, emptyingRoutine);
-        this->addState(MaxTemperature, maxTemperatureRoutine);
-        L1 = new Led(L1_PIN);
-        L2 = new Led(L2_PIN);
-        door = new Door(DOOR_PIN);
-        userLCD = new UserLCD();
-        sleepTimer = new Timer(this, new SleepTimerEvent());
-        sleepTimer->init(SLEEP_TIMER_SECONDS, false);
-    }
+    void setup();
 };
 
 extern AppController controller;

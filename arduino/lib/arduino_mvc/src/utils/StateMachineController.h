@@ -11,7 +11,7 @@ protected:
     StateMachine *stateMachine;
 
 public:
-    StateMachineController(int currentState);
+    StateMachineController();
     void addState(int stateId, void (*callback)());
 
     void changeState(int stateId);

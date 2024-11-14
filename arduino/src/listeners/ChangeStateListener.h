@@ -2,16 +2,21 @@
 #define __CHANGE_STATE_LISTENER__
 #include "Listener.h"
 #include "components/StateMachine/ChangeStateEvent.h"
-#include "AppController.h"
-#include "enums/States.h"
 #include "components/timer/Timer.h"
+#include "AppController.h"
+#include "Event.h"
+#include "Controller.h"
 
-class ChangeStateListener : Listener
+class ChangeStateListener : public Listener
 {
-    void execute(ChangeStateEvent event, AppController *controller)
+public:
+    void execute(Event *event, Controller *controller)
     {
-        if (event.getNewState() == Available)
+        auto *realEvent = static_cast<ChangeStateEvent *>(event);
+        auto *realController = static_cast<AppController *>(controller);
+        if (realEvent->getNewState() == Available)
         {
+            realController->sleepTimer->start();
         }
     }
 };
