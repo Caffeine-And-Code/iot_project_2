@@ -2,5 +2,5 @@
 
 MonoPin::MonoPin(int pin)
 {
-    MonoPin::pin = pin;
+    this->pin = pin;
 }
