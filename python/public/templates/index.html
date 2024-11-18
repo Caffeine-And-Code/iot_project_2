@@ -8,8 +8,10 @@
     <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
   </head>
   <body>
-
-    <h1 style="position:absolute;top:0;color:#fff">Monitoraggio Fluido</h1>
+    <h1 style="position: absolute; top: 0; color: #fff; z-index: 999">
+      Monitoraggio Fluido
+    </h1>
+    <div id="notifications"></div>
     <div class="DataContainer">
       <div class="coverage" id="coverage"></div>
       <section class="tanica" id="svgLiquid">
@@ -22,7 +24,10 @@
           <defs></defs>
           <path id="myID" d="" />
         </svg>
-        <h1 class="liquidLevel" id="liquidLevel">0%</h1>
+        <div class="liquidLevel">
+          <h1 id="liquidLevel">0%</h1>
+          <button id="BtnLevel">Svuota Tanica</button>
+        </div>
       </section>
 
       <div id="wrapper">
@@ -33,18 +38,25 @@
       </div>
     </div>
 
-    <div class="DataContainer" style="margin-top:100px;justify-content: space-around;">
-      <canvas id="TempChart" style="width:50%;max-width:700px"></canvas>
-
-    <canvas id="LevelChart" style="width:50%;max-width:700px"></canvas>
+    <div
+      class="DataContainer"
+      style="margin-top: 100px; justify-content: space-around"
+    >
+      <div style="width:50%">
+        <canvas id="TempChart" style="width: 100%; max-width: 700px"></canvas>
+        <button id="BtnTemp" class="Btn">Aggiorna Grafico</button>
+      </div>
+      <div style="width:50%">
+        <button id="BtnLevelChart" class="Btn">Aggiorna Grafico</button>
+        <canvas id="LevelChart" style="width: 100%; max-width: 700px"></canvas>
+      </div>
     </div>
-
 
     <script src="./../static/gsap.min.js"></script>
 
     <script src="./../static/wavify.js"></script>
 
     <script src="./../static/Chart.js"></script>
-    <script  src="./../static/script.js"></script>
+    <script src="./../static/script.js"></script>
   </body>
 </html>

@@ -22,7 +22,7 @@ class WebViewBuilder:
         app = QtWidgets.QApplication(sys.argv)
         size = app.primaryScreen().size()
         rect = app.primaryScreen().availableGeometry()        
-        self.geometry = {"ax":0, "ay":0, "aw":rect.width()-100, "ah":rect.height()-100 }
+        self.geometry = {"ax":0, "ay":0, "aw":rect.width(), "ah":rect.height()-100 }
 
     def setUrlFromLocalFile(self, url):
         self.url = QUrl.fromLocalFile(url)

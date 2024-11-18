@@ -2,8 +2,26 @@
   --backGroundColor: #414141;
 }
 
+.notification{
+  text-align: center;
+  position: fixed;
+  width: 250px;
+  top: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.warning {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI Emoji", "Noto Color Emoji", Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,36 +46,84 @@ h1 {
 
 .tanica {
   width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#BtnLevel{
+  display: none;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  background-color: #007bff;
+}
+
+#BtnTemp{
+  bottom: 20px;
+  left: 100px;
+}
+
+#BtnLevelChart{
+  bottom: 20px;
+  right: 100px;
+}
+
+.Btn{
+  position:absolute;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  background-color: #007bff;
+}
+
+.Btn:hover{
+  background-color: #0056b3;
+  cursor: pointer;
+}
+
+#BtnLevel:hover{
+  background-color: #0056b3;
+  cursor: pointer;
 }
 
 .liquidLevel {
   /* make this text so it can't be selected */
   user-select: none;
-
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   position: absolute;
+
+}
+
+.liquidLevel > h1{
   color: transparent;
   -webkit-text-stroke: 3px black; /* Bordo nero di 1px attorno al testo */
 
   font-size: 90px;
+  margin: 0%;
 }
 
 .coverage {
   position: absolute;
   background-color: var(--backGroundColor);
+  margin-top: -70px;
+  z-index: 1;
 }
 
 svg#svgWaves {
   height: 550px;
-  width: 650px;
+  width: 450px;
   border-radius: 0px 0px 60px 60px;
   border: 5px solid #6f4e37;
 }
 
-#myID{
+#myID {
   margin-bottom: 150px;
 }
 
@@ -79,7 +145,7 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 300px;
+  margin-top: 400px;
 }
 
 /* Temperature css */
