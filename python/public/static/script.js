@@ -9,7 +9,7 @@ function addNotification(type, message) {
   let notification = document.createElement("div");
   notification.classList.add("notification");
   notification.classList.add(type);
-  notification.style.top = `${notifications.length * 55}px`;
+  notification.style.top = `${notifications.length * 55 + 92}px`;
   notification.innerText = message;
   document.getElementById("notifications").appendChild(notification);
   notifications.push(notification);
@@ -19,8 +19,8 @@ function addNotification(type, message) {
   }, 5000);
 }
 
-function togleFluidSeverity() {
-  severityFluid = !severityFluid;
+function setFluidSeverity(val) {
+  severityFluid = val;
   document.getElementById("BtnLevel").style.display = severityFluid
     ? "block"
     : "none";
@@ -79,13 +79,10 @@ function changeColorBasedOnTemperature(value) {
 //on load actions
 document.addEventListener("DOMContentLoaded", function () {
   adjustPositions();
-  document
-    .getElementById("BtnTemp")
-    .addEventListener("click", updateTempCharts);
-
-  document
-    .getElementById("BtnLevelChart")
-    .addEventListener("click", updateLevelChart);
+  document.getElementById("updateBtn").addEventListener("click", () => {
+    updateTempCharts();
+    updateLevelChart();
+  });
 });
 
 // Chart Logic
@@ -103,9 +100,9 @@ function updateTempCharts() {
   Temp.data.labels = storicoTemp.map((_, i) => i);
   Temp.data.datasets = [
     {
-      label: "Temperature",
+      label: "Temperatura",
       data: storicoTemp,
-      borderColor: "red",
+      borderColor: "#f9866e",
       fill: false,
     },
   ];
@@ -115,9 +112,9 @@ function updateLevelChart() {
   Level.data.labels = storicoLevel.map((_, i) => i);
   Level.data.datasets = [
     {
-      label: "Fluid Level",
+      label: "Livello del Liquido",
       data: storicoLevel,
-      borderColor: "blue",
+      borderColor: "#e1f96e",
       fill: false,
     },
   ];
@@ -179,10 +176,10 @@ function updateValue(value) {
     adjustPositions();
 
     if (fluidLevel == 100) {
-      togleFluidSeverity();
+      setFluidSeverity(true);
       addNotification("warning", "Fluid level is at 100%");
     } else {
-      severityFluid = false;
+      setFluidSeverity(false);
     }
 
     myWave && myWave.kill();
@@ -293,19 +290,5 @@ function adjustPositions() {
   leftPosition += marginLeft - textWidth / 2;
 
   text.style.left = `${leftPosition}px`;
-
-  let coverage = document.getElementById("coverage");
-
-  // set the top position of the coverage
-  coverage.style.height = "40px";
-  coverage.style.width = waveWidth + 11 + "px";
-
-  // set the left position of the coverage
-
-  let coverageLeftPosition =
-    Math.floor((waveContainerWidth - waveWidth) / 2) - 5;
-  coverage.style.left = `${coverageLeftPosition}px`;
-
-  coverage.style.top = `100px`;
 }
 askLoop();

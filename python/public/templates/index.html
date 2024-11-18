@@ -8,12 +8,31 @@
     <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
   </head>
   <body>
-    <h1 style="position: absolute; top: 0; color: #fff; z-index: 999">
-      Monitoraggio Fluido
-    </h1>
+    <nav>
+      <div class="nav-container">
+        <h1>Monitoraggio Fluido</h1>
+        <button
+          style="border: none; background-color: transparent; cursor: pointer"
+          id="navBtn"
+        >
+          <svg
+            xmlns="./../static/imgs/svgexport-12.svg"
+            width="32"
+            height="32"
+            fill="white"
+            class="bi bi-list"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+            />
+          </svg>
+        </button>
+      </div>
+    </nav>
     <div id="notifications"></div>
     <div class="DataContainer">
-      <div class="coverage" id="coverage"></div>
       <section class="tanica" id="svgLiquid">
         <svg
           id="svgWaves"
@@ -26,7 +45,11 @@
         </svg>
         <div class="liquidLevel">
           <h1 id="liquidLevel">0%</h1>
-          <button id="BtnLevel">Svuota Tanica</button>
+          <button type="button" class="button" id="BtnLevel">
+            <div class="button-top">Svuota Tanica</div>
+            <div class="button-bottom"></div>
+            <div class="button-base"></div>
+          </button>
         </div>
       </section>
 
@@ -38,18 +61,19 @@
       </div>
     </div>
 
-    <div
-      class="DataContainer"
-      style="margin-top: 100px; justify-content: space-around"
-    >
-      <div style="width:50%">
-        <canvas id="TempChart" style="width: 100%; max-width: 700px"></canvas>
-        <button id="BtnTemp" class="Btn">Aggiorna Grafico</button>
-      </div>
-      <div style="width:50%">
-        <button id="BtnLevelChart" class="Btn">Aggiorna Grafico</button>
-        <canvas id="LevelChart" style="width: 100%; max-width: 700px"></canvas>
-      </div>
+    <!-- Overlay che appare con la sidebar -->
+    <div id="overlay" class="overlay"></div>
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+      <button id="closeSidebarBtn" class="close-btn">&times;</button>
+      <h2>Storico Dio Cane!</h2>
+      <button type="button" class="button" id="updateBtn">
+        <div class="button-top">Aggiorna Grafici</div>
+        <div class="button-bottom"></div>
+        <div class="button-base"></div>
+      </button>
+      <canvas id="LevelChart" style="width: 100%; max-width: 700px"></canvas>
+      <canvas id="TempChart" style="width: 100%; max-width: 700px"></canvas>
     </div>
 
     <script src="./../static/gsap.min.js"></script>
@@ -58,5 +82,6 @@
 
     <script src="./../static/Chart.js"></script>
     <script src="./../static/script.js"></script>
+    <script src="./../static/nav.js"></script>
   </body>
 </html>

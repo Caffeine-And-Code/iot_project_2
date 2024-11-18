@@ -2992,8 +2992,8 @@
     // TODO(v3): remove 'global' from namespace.  all default are global and
     // there's inconsistency around which options are under 'global'
     defaults._set('global', {
-        defaultColor: 'rgba(0,0,0,0.1)',
-        defaultFontColor: '#666',
+        defaultColor: '#000',
+        defaultFontColor: '#fff',
         defaultFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
         defaultFontSize: 12,
         defaultFontStyle: 'normal',
