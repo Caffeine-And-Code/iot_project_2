@@ -2,7 +2,10 @@ let severityFluid = false;
 let severityTemp = false;
 let storicoTemp = [];
 let storicoLevel = [];
-
+let storicoDelloStorico = {
+  temperature: [],
+  fluidLevel: [],
+}
 let notifications = [];
 
 function addNotification(type, message) {
@@ -79,10 +82,14 @@ function changeColorBasedOnTemperature(value) {
 //on load actions
 document.addEventListener("DOMContentLoaded", function () {
   adjustPositions();
-  document.getElementById("updateBtn").addEventListener("click", () => {
-    updateTempCharts();
-    updateLevelChart();
-  });
+  //set a timer that automatically updates the charts every 5 seconds
+  setInterval(() => {
+    if(storicoDelloStorico.temperature.length < storicoTemp.length)
+      updateTempCharts();
+    
+    if(storicoDelloStorico.fluidLevel.length < storicoLevel.length)
+      updateLevelChart();
+  }, 1000);
 });
 
 // Chart Logic
@@ -96,6 +103,8 @@ let Level = new Chart("LevelChart", {
   data: {},
 });
 
+
+
 function updateTempCharts() {
   Temp.data.labels = storicoTemp.map((_, i) => i);
   Temp.data.datasets = [
@@ -107,6 +116,7 @@ function updateTempCharts() {
     },
   ];
   Temp.update();
+  storicoDelloStorico.temperature = [...storicoTemp];
 }
 function updateLevelChart() {
   Level.data.labels = storicoLevel.map((_, i) => i);
@@ -119,6 +129,7 @@ function updateLevelChart() {
     },
   ];
   Level.update();
+  storicoDelloStorico.fluidLevel = [...storicoLevel];
 }
 
 var myWave;

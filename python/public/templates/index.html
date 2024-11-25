@@ -10,7 +10,6 @@
   <body>
     <nav>
       <div class="nav-container">
-        <h1>Monitoraggio Fluido</h1>
         <button
           style="border: none; background-color: transparent; cursor: pointer"
           id="navBtn"
@@ -29,6 +28,7 @@
             />
           </svg>
         </button>
+        <h1>Monitoraggio Fluido</h1>
       </div>
     </nav>
     <div id="notifications"></div>
@@ -66,12 +66,7 @@
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
       <button id="closeSidebarBtn" class="close-btn">&times;</button>
-      <h2>Storico Dio Cane!</h2>
-      <button type="button" class="button" id="updateBtn">
-        <div class="button-top">Aggiorna Grafici</div>
-        <div class="button-bottom"></div>
-        <div class="button-base"></div>
-      </button>
+      <h2>Storico</h2>
       <canvas id="LevelChart" style="width: 100%; max-width: 700px"></canvas>
       <canvas id="TempChart" style="width: 100%; max-width: 700px"></canvas>
     </div>

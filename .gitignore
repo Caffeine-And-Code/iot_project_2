@@ -1,5 +1,5 @@
 # hide the venv folder
 venv/
 __pycache__
-
+.DS_Store
 .env
