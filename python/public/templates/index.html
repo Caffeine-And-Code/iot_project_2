@@ -5,39 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Monitoraggio Serial</title>
     <link rel="stylesheet" href="./../static/style.css" />
-        <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
-
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
   </head>
   <body>
-    <div id="columnView">
-      <h1>Dati dalla Porta Seriale</h1>
-      <div id="data">Caricamento...</div>
-    </div>
-    <section class="tanica" id="svgLiquid">
-      <svg
-        id="svgWaves"
-        width="70%"
-        height="600px"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/
-          svg"
-      >
-        <defs></defs>
-        <path id="myID" d="" />
-      </svg>
-      <div class="statusBar">
-        <h4>-100%</h4>
-        <h4>-75%</h4>
-        <h4>-50%</h4>
-        <h4>-25%</h4>
-        <h4>-0%</h4>
+    <nav>
+      <div class="nav-container">
+        <h1>Monitoraggio Fluido</h1>
+        <button
+          style="border: none; background-color: transparent; cursor: pointer"
+          id="navBtn"
+        >
+          <svg
+            xmlns="./../static/imgs/svgexport-12.svg"
+            width="32"
+            height="32"
+            fill="white"
+            class="bi bi-list"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+            />
+          </svg>
+        </button>
       </div>
-    </section>
+    </nav>
+    <div id="notifications"></div>
+    <div class="DataContainer">
+      <section class="tanica" id="svgLiquid">
+        <svg
+          id="svgWaves"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/
+            svg"
+        >
+          <defs></defs>
+          <path id="myID" d="" />
+        </svg>
+        <div class="liquidLevel">
+          <h1 id="liquidLevel">0%</h1>
+          <button type="button" class="button" id="BtnLevel">
+            <div class="button-top">Svuota Tanica</div>
+            <div class="button-bottom"></div>
+            <div class="button-base"></div>
+          </button>
+        </div>
+      </section>
+
+      <div id="wrapper">
+        <div id="termometer">
+          <div id="temperature" style="height: 0" data-value="0°C"></div>
+          <div id="graduations"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay che appare con la sidebar -->
+    <div id="overlay" class="overlay"></div>
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+      <button id="closeSidebarBtn" class="close-btn">&times;</button>
+      <h2>Storico Dio Cane!</h2>
+      <button type="button" class="button" id="updateBtn">
+        <div class="button-top">Aggiorna Grafici</div>
+        <div class="button-bottom"></div>
+        <div class="button-base"></div>
+      </button>
+      <canvas id="LevelChart" style="width: 100%; max-width: 700px"></canvas>
+      <canvas id="TempChart" style="width: 100%; max-width: 700px"></canvas>
+    </div>
 
     <script src="./../static/gsap.min.js"></script>
 
     <script src="./../static/wavify.js"></script>
 
+    <script src="./../static/Chart.js"></script>
     <script src="./../static/script.js"></script>
-  </body> 
+    <script src="./../static/nav.js"></script>
+  </body>
 </html>
