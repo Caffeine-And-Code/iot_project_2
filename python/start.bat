@@ -1,4 +1,18 @@
 @echo off
+REM Check if .env.example exists and copy it as .env if .env does not exist
+IF EXIST ".env.example" (
+    IF NOT EXIST ".env" (
+        echo .env file not found. Creating one from .env.example...
+        copy ".env.example" ".env"
+    ) ELSE (
+        echo .env file already exists. Skipping creation.
+    )
+) ELSE (
+    echo .env.example not found. Please ensure it is present in the root directory.
+    pause
+    exit /b
+)
+
 REM Check if virtual environment folder exists
 IF NOT EXIST "venv" (
     echo Virtual environment not found. Creating one...
