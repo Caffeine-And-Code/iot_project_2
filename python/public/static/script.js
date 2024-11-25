@@ -147,12 +147,24 @@ function initializeWebChannel() {
       });
     });
   });
+
+  document.getElementById("BtnLevel").addEventListener("click", () => {
+    sendMessageToPython("1")
+  }
+  );
+  document.getElementById("BtnTemp").addEventListener("click", () => {  
+    sendMessageToPython("2")
+  });
 }
 
 // Get & Set data from python backend
 
 function getDataFromJson(pyData) {
-  return pyData;
+  try {
+    return JSON.parse(pyData);
+  } catch (error) {
+    return pyData;
+  }
 }
 
 function getFluidLevelFromJson(pyData) {
@@ -180,7 +192,7 @@ document.addEventListener("DOMContentLoaded", initializeWebChannel);
 
 function updateValue(value) {
   let oldValue = storicoLevel[storicoLevel.length - 1];
-  if (oldValue != value.fluidLevel) {
+  if (oldValue != value.fluidLevel && value.fluidLevel != null && value.fluidLevel != undefined) {
     storicoLevel.push(value.fluidLevel);
     let fluidLevel = value.fluidLevel;
     document.getElementById("liquidLevel").innerText = fluidLevel + "%";
@@ -203,7 +215,7 @@ function updateValue(value) {
     });
   }
   oldValue = storicoTemp[storicoTemp.length - 1];
-  if (oldValue != value.temperature) {
+  if (oldValue != value.temperature && value.temperature != null && value.temperature != undefined) {
     storicoTemp.push(value.temperature);
 
     let temperature = value.temperature;
@@ -211,12 +223,17 @@ function updateValue(value) {
     setTemperature(temperature);
 
     if (temperature >= 40) {
-      severityTemp = true;
+      setSeverityTemp(true);
       addNotification("warning", "Temperature is above 40°C");
     } else {
-      severityTemp = false;
+      setSeverityTemp(false);
     }
   }
+}
+
+function setSeverityTemp(val){
+  severityTemp = val;
+  document.getElementById("BtnTemp").style.display = severityTemp ? "block" : "none";
 }
 
 function convertPercentageToValueForTheWave(percentage) {
