@@ -1,10 +1,12 @@
 #include "StateMachine.h"
 #include "Arduino.h"
 
-StateMachine::StateMachine(Controller *controller) : Component(controller)
+StateMachine::StateMachine(Controller *controller, long runDelay) : Component(controller)
 {
     this->currentState = -1;
     this->currentStateIndex = 0;
+    this->runDelay = runDelay;
+    this->internalTimer = new Timer(controller);
 }
 
 void StateMachine::addState(int stateId, void (*callback)())
@@ -34,8 +36,16 @@ void StateMachine::changeState(int stateId)
     }
 }
 
+int StateMachine::getCurrentState()
+{
+    return this->currentState;
+}
+
 void StateMachine::update()
 {
-    if (this->currentState >= 0 && this->currentState < this->currentStateIndex)
-        this->stateCallbacks[this->currentState]();
+    if (this->internalTimer->runUpdateAndCheckTrigger())
+    {
+        if (this->currentState >= 0 && this->currentState < this->currentStateIndex)
+            this->stateCallbacks[this->currentState]();
+    }
 }

@@ -11,10 +11,11 @@ protected:
     StateMachine *stateMachine;
 
 public:
-    StateMachineController();
+    StateMachineController(long runDelay);
     void addState(int stateId, void (*callback)());
 
     void changeState(int stateId);
+    int getCurrentState();
 
     void setup();
 

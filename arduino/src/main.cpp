@@ -1,5 +1,10 @@
 #include <Arduino.h>
+#define DEBUG
+#ifndef DEBUG
 #include "AppController.h"
+#else
+#include "TestController.h"
+#endif
 #include "config/Config.h"
 
 void setup()

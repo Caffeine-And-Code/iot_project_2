@@ -1,8 +1,8 @@
 #ifndef __SLEEP_TIMER_EVENT__
 #define __SLEEP_TIMER_EVENT__
-#include "components/timer/TimerEvent.h"
+#include "Event.h"
 
-class SleepTimerEvent : public TimerEvent
+class SleepTimerEvent : public Event
 {
     String getEventName()
     {

@@ -7,7 +7,6 @@ enum States
     Sleep = 2,
     DoorOpen = 3,
     Full = 4,
-    Emptying = 5,
     MaxTemperature = 6
 };
 

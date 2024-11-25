@@ -2,7 +2,7 @@
 #define __TIMER__
 #include "Controller.h"
 #include "Arduino.h"
-#include "TimerEvent.h"
+#include "Event.h"
 #include "Component.h"
 
 class Timer : public Component
@@ -11,10 +11,13 @@ class Timer : public Component
     long time;
     long lastCheckMillis;
     bool running;
-    TimerEvent *triggerEvent;
+    Event *triggerEvent;
+    bool shouldTrigger;
+    bool trigger;
 
 public:
-    Timer(Controller *controller, TimerEvent *triggerEvent);
+    Timer(Controller *controller, Event *triggerEvent);
+    Timer(Controller *controller);
     void init(long time, bool loop);
 
     bool isRunning();
@@ -25,6 +28,8 @@ public:
     void stop();
 
     void update();
+    bool runUpdateAndCheckTrigger();
+    bool hasTriggered();
 };
 
 #endif

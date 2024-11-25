@@ -7,7 +7,11 @@ ServoMotor::ServoMotor(int pin) : MonoPin(pin)
 
 void ServoMotor::move(int value)
 {
-    this->servo.write(value);
+    if (lastValue < 0 || lastValue != value)
+    {
+        lastValue = value;
+        this->servo.write(value);
+    }
 }
 
 void ServoMotor::open()

@@ -1,10 +1,18 @@
 #include "Timer.h"
 
-Timer::Timer(Controller *controller, TimerEvent *triggerEvent) : triggerEvent(triggerEvent),
-                                                                 Component(controller)
+Timer::Timer(Controller *controller, Event *triggerEvent) : triggerEvent(triggerEvent),
+                                                            Component(controller)
 {
     this->lastCheckMillis = 0;
     this->running = false;
+}
+
+Timer::Timer(Controller *controller) : triggerEvent(triggerEvent),
+                                       Component(controller)
+{
+    this->lastCheckMillis = 0;
+    this->running = false;
+    this->shouldTrigger = false;
 }
 
 void Timer::init(long time, bool loop)
@@ -43,6 +51,26 @@ void Timer::update()
             this->running = false;
         }
         this->lastCheckMillis = millis();
-        this->controller->triggerEvent(this->triggerEvent);
+        this->trigger = true;
+        if (this->shouldTrigger)
+        {
+            this->controller->triggerEvent(this->triggerEvent);
+        }
     }
+    this->trigger = false;
+}
+
+bool Timer::runUpdateAndCheckTrigger()
+{
+    if (this->isRunning())
+    {
+        this->restart();
+    }
+    this->update();
+    return this->hasTriggered();
+}
+
+bool Timer::hasTriggered()
+{
+    return this->trigger;
 }
