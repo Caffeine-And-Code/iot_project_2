@@ -9,7 +9,7 @@ from app.view.webviewCore import Bridge
 
 class WebViewBuilder:
 
-    def __init__(self):
+    def __init__(self, Controller):
         self.url = ""
         self.title = ""
         self.onNewMessage = lambda x: print(x)
@@ -23,6 +23,7 @@ class WebViewBuilder:
         size = app.primaryScreen().size()
         rect = app.primaryScreen().availableGeometry()        
         self.geometry = {"ax":0, "ay":0, "aw":rect.width(), "ah":rect.height() }
+        self.Controller = Controller
 
     def setUrlFromLocalFile(self, url):
         self.url = QUrl.fromLocalFile(url)
@@ -67,11 +68,11 @@ class WebViewBuilder:
         self.browser = browser
         self.initialized = True
         
-        sys.exit(app.exec_())
+        app.exec_()
+        self.Controller.serialIO.close()
 
         return self
     
     def sendMessage(self, message):
         if self.initialized:
             self.browser.page().runJavaScript(f"{self.jsListenFunction}({message})")
-    

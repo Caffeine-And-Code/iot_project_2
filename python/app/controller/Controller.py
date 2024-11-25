@@ -9,7 +9,7 @@ from app.IO import TestIO, SerialIO
 class Controller:
 
     def __init__(self):
-        self.view = View(self.onNewMessage)
+        self.view = View(self.onNewMessage, self)
         if config.useVirtualSerial:
             self.serialIO = TestIO.TestIO(self.onNewSerialMessage)
         else:

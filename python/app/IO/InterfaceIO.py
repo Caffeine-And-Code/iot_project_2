@@ -10,3 +10,6 @@ class InterfaceIO:
 
     def sendMessage(self, message):
         pass
+    
+    def close(self):
+        pass

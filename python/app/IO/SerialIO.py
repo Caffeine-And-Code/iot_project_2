@@ -11,16 +11,17 @@ class SerialIO(InterfaceIO):
 
     def __init__(self, onNewMessage):
         super().__init__(onNewMessage)
+        self.running = True
 
-    
-    def listen(self ):
-        t = Thread(target=self.listen_runtime, args=[self.messageQueue, self.readQueue])
-        t.start()
+    def listen(self):
+        self.t = Thread(target=self.listen_runtime, args=[self.messageQueue, self.readQueue])
+        self.running = True
+        self.t.start()
 
     def listen_runtime(self, messageQueue: queue.Queue, readQueue: queue.Queue):
         # Initialize the serial connection
         with Serial(config.serialPort, config.baudRate, timeout=0.1) as ser:
-            while True:
+            while self.running:
                 line = ser.readline().decode('utf-8').strip()
                 
                 if line.isdigit():
@@ -31,7 +32,11 @@ class SerialIO(InterfaceIO):
                 while not messageQueue.empty():
                     message = f"{messageQueue.get()}"
                     ser.write(message.encode("utf-8"))
-
+                    
+    def close(self):
+        self.running = False
+        self.messageQueue = queue.Queue()
+        self.t.join()
 
     def sendMessage(self, message):
         self.messageQueue.put(message)

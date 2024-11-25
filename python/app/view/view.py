@@ -4,9 +4,9 @@ import os
 
 class View:
 
-    def __init__(self, onNewMessage):
+    def __init__(self, onNewMessage, Controller):
         self.onNewMessageCallback = onNewMessage
-        self.webviewBuilder = WebViewBuilder()
+        self.webviewBuilder = WebViewBuilder(Controller)
         self.rendered = pyqtSignal()
 
     def render(self):
@@ -14,7 +14,6 @@ class View:
         self.webviewBuilder.setUrlFromLocalFile(os.path.abspath("public/templates/index.html"))
         self.webviewBuilder.setOnNewMessage(self.onNewMessage)
         self.webviewBuilder.render()
-
 
     def onNewMessage(self, message):
         self.onNewMessageCallback(message)
