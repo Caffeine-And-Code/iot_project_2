@@ -13,6 +13,28 @@ public:
         this->printCentered("TO ENTER WASTE", 2);
     }
 
+    void printOnDoorOpenMessage()
+    {
+        this->printCentered("PRESS CLOSE", 1);
+        this->printCentered("WHEN DONE", 2);
+    }
+
+    void printWasteReceiver()
+    {
+        this->printCentered("WASTE RECEIVED", 1);
+    }
+
+    void printContainerFull()
+    {
+        this->printCentered("CONTAINER", 1);
+        this->printCentered("FULL", 2);
+    }
+
+    void printProblemDetected()
+    {
+        this->printCentered("PROBLEM DETECTED", 1);
+    }
+
     void empty()
     {
         this->monitor->noBacklight();

@@ -5,38 +5,62 @@
 #include "listeners/WakeUpListener.h"
 #include <avr/sleep.h>
 #include "events/WakeUpEvent.h"
+#include "events/WasteStillEndEvent.h"
+#include "listeners/WasteStIllEndListener.h"
+#include "events/WasteUpdateEvent.h"
+#include "listeners/WasteUpdateListener.h"
 
 AppController controller;
 
 void AppController::setup()
 {
+    this->enableVerbose();
+
     this->addState(Available, availableRoutine);
     this->addState(Sleep, sleepRouting);
     this->addState(DoorOpen, doorOpenRoutine);
     this->addState(Full, fullRoutine);
-    this->addState(Emptying, emptyingRoutine);
     this->addState(MaxTemperature, maxTemperatureRoutine);
     L1 = new Led(L1_PIN);
     L2 = new Led(L2_PIN);
     door = new Door(DOOR_PIN);
     userLCD = new UserLCD();
+    serial = new SerialAgent();
+    peopleDetector = new PeopleDetector(PIR_PIN);
+    btnOpen = new Button(BTN_OPEN_PIN);
+    btnClose = new Button(BTN_CLOSE_PIN);
+    temperature = new Temperature(TEMPERATURE_PIN);
+    wasteDetector = new WasteDetector(TRIG_PIN, ECHO_PIN, temperature);
+    temperatureAgent = new TemperatureAgent(this);
+
     sleepTimer = new Timer(this, new SleepTimerEvent());
     sleepTimer->init(SLEEP_TIMER_SECONDS * 1000, false);
+    stillTimer = new Timer(this, new WasteStillEndEvent());
+    stillTimer->init(T1, false);
 
     this->eventScheduler->addSchedule("ChangeStateEvent", new ChangeStateListener());
     this->eventScheduler->addSchedule("SleepTimerEvent", new SleepTimerListener());
     this->eventScheduler->addSchedule("WakeUpEvent", new WakeUpListener());
+    this->eventScheduler->addSchedule("WasteStillEndEvent", new WasteStIllEndListener());
+    this->eventScheduler->addSchedule("WasteUpdate", new WasteUpdateListener());
 
-    this->addComponent(sleepTimer);
     this->changeState(Available);
 
+    this->addComponent(temperatureAgent);
     attachInterrupt(digitalPinToInterrupt(PIR_PIN), onPIRTrigger, RISING);
 }
 
 void availableRoutine()
 {
-    controller.L1->switchOn();
-    controller.userLCD->printAvailableMessage();
+    controller.sleepTimer->update();
+    if (controller.btnOpen->isPressed())
+    {
+        controller.changeState(DoorOpen);
+    }
+    if (controller.peopleDetector->isPersonDetected())
+    {
+        controller.sleepTimer->restart();
+    }
 }
 void sleepRouting()
 {
@@ -50,17 +74,37 @@ void sleepRouting()
 }
 void doorOpenRoutine()
 {
+    controller.sleepTimer->update();
+    controller.door->open();
+    if (controller.btnClose->hasChanged() && controller.btnClose->isPressed())
+    {
+        controller.triggerEvent(new WasteStillEndEvent());
+    }
+    auto wasteLevelPercentage = controller.wasteDetector->getFullPercentage();
+    controller.triggerEvent(new WasteUpdateEvent(wasteLevelPercentage));
+    if (wasteLevelPercentage == 100)
+    {
+        controller.changeState(Full);
+    }
 }
 void fullRoutine()
 {
-}
-void emptyingRoutine()
-{
+    if (controller.serial->emptyContainer())
+    {
+        controller.door->reverseOpen();
+        delay(T3);
+        controller.changeState(Available);
+    }
 }
 void maxTemperatureRoutine()
 {
+    if (controller.serial->fixTemperature())
+    {
+        controller.changeState(Available);
+    }
 }
 void onPIRTrigger()
 {
+    controller.println("Triggered PIR interrupt");
     controller.triggerEvent(new WakeUpEvent());
 }

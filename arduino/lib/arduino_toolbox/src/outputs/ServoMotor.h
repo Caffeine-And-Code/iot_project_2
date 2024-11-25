@@ -11,6 +11,7 @@ class ServoMotor : public MonoPin
 {
 protected:
     Servo servo;
+    int lastValue = -1;
 
 public:
     ServoMotor(int pin);
