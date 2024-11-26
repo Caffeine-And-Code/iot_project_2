@@ -17,17 +17,32 @@ class SerialIO(InterfaceIO):
         self.t = Thread(target=self.listen_runtime, args=[self.messageQueue, self.readQueue])
         self.running = True
         self.t.start()
+    
+    def formatMessage(self,message):
+        # format of the message => valueW or valueT or errorW or errorT
+        if "ET" in message:
+            return {"errorTemp": "ERROR"}
+        elif "EW" in message:
+            return {"errorFluid": "ERROR"}
+        elif "W" in message:
+            return {"fluidLevel": message[:-1]}
+        elif "T" in message:
+            return {"temperature": message[:-1]}
+        
 
     def listen_runtime(self, messageQueue: queue.Queue, readQueue: queue.Queue):
         # Initialize the serial connection
         with Serial(config.serialPort, config.baudRate, timeout=0.1) as ser:
             while self.running:
                 line = ser.readline().decode('utf-8').strip()
-                
+                line = self.formatMessage(line)
                 readQueue.put(line)
                 while not messageQueue.empty():
                     message = f"{messageQueue.get()}"
                     ser.write(message.encode("utf-8"))
+    
+    
+        
                     
     def close(self):
         self.running = False

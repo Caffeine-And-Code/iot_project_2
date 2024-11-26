@@ -14,11 +14,28 @@ class TestIO(InterfaceIO):
     def listen(self):
         self.t = Thread(target=self.listen_runtime, args=[self.readQueue, self.newMessageWait])
         self.t.start()
+        
+    def formatMessage(self,message):
+        # format of the message => valueW or valueT or errorW or errorT
+        if "ET" == message:
+            return {"errorTemp": "ERROR"}
+        elif "EW" == message:
+            return {"errorFluid": "ERROR"}
+        elif "W" in message:
+            return {"fluidLevel": message[:-1]}
+        elif "T" in message:
+            return {"temperature": message[:-1]}
 
     def listen_runtime(self, readQueue: queue.Queue, wait: int):
         while self.running:
-            readQueue.put(randint(0,100) + "W")
-            readQueue.put(randint(-20, 51) + "T")
+            readQueue.put(self.formatMessage("EW"))
+            readQueue.put(self.formatMessage("ET"))
+            print(self.formatMessage(str(randint(0,100))+"W"))
+            print(self.formatMessage(str(randint(-20, 51))+"T"))
+            print(self.formatMessage("ET"))
+            print(self.formatMessage("EW"))
+            
+            
             time.sleep(wait)
     
     def close(self):

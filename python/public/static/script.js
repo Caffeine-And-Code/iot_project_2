@@ -27,6 +27,7 @@ function setFluidSeverity(val) {
   document.getElementById("BtnLevel").style.display = severityFluid
     ? "block"
     : "none";
+  severityFluid && addNotification("warning", "Fluid level is at 100%")
 }
 
 const units = {
@@ -74,6 +75,9 @@ function interpolateColor(color1, color2, factor) {
 
 // Funzione per calcolare il colore dal valore
 function changeColorBasedOnTemperature(value) {
+  if(value == undefined){
+    value = document.getElementById("temperature").innerText
+  }
   // Normalizza il valore tra 0 e 1
   const normalized =
     (value - config.minTemp) / (config.maxTemp - config.minTemp);
@@ -141,10 +145,7 @@ function initializeWebChannel() {
 
     // Listen for messages from Python
     bridge.sendToJs.connect(function (message) {
-      updateValue({
-        fluidLevel: getFluidLevelFromJson(message),
-        temperature: getTemperatureFromJson(message),
-      });
+      //receiveMessageFromPython(message);
     });
   });
 
@@ -168,11 +169,16 @@ function getDataFromJson(pyData) {
 }
 
 function getFluidLevelFromJson(pyData) {
-  return getDataFromJson(pyData).fluidLevel;
+  return getDataFromJson(pyData).fluidLevel ;
 }
 
 function getTemperatureFromJson(pyData) {
   return getDataFromJson(pyData).temperature;
+}
+
+function getNotificationsFromJson(pyData) {
+  setFluidSeverity(getDataFromJson(pyData).errorFluid!=undefined ? true : false);
+  setSeverityTemp(getDataFromJson(pyData).errorTemp!=undefined ? true : false);
 }
 
 function sendMessageToPython(message) {
@@ -186,6 +192,8 @@ function receiveMessageFromPython(message) {
     fluidLevel: getFluidLevelFromJson(message),
     temperature: getTemperatureFromJson(message),
   });
+  getNotificationsFromJson(message);
+  
 }
 
 document.addEventListener("DOMContentLoaded", initializeWebChannel);
@@ -197,13 +205,6 @@ function updateValue(value) {
     let fluidLevel = value.fluidLevel;
     document.getElementById("liquidLevel").innerText = fluidLevel + "%";
     adjustPositions();
-
-    if (fluidLevel == 100) {
-      setFluidSeverity(true);
-      addNotification("warning", "Fluid level is at 100%");
-    } else {
-      setFluidSeverity(false);
-    }
 
     myWave && myWave.kill();
     myWave = wavify(document.querySelector("#myID"), {
@@ -221,19 +222,13 @@ function updateValue(value) {
     let temperature = value.temperature;
 
     setTemperature(temperature);
-
-    if (temperature >= 40) {
-      setSeverityTemp(true);
-      addNotification("warning", "Temperature is above 40°C");
-    } else {
-      setSeverityTemp(false);
-    }
   }
 }
 
 function setSeverityTemp(val){
   severityTemp = val;
   document.getElementById("BtnTemp").style.display = severityTemp ? "block" : "none";
+  severityTemp && addNotification("warning", "Temperature is too high");
 }
 
 function convertPercentageToValueForTheWave(percentage) {
