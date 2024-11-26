@@ -5,12 +5,12 @@
 class WasteUpdateEvent : public Event
 {
 private:
-    int percentage;
+    short percentage;
 
 public:
-    WasteUpdateEvent(int percentage) : percentage(percentage) {}
+    WasteUpdateEvent(short percentage) : percentage(percentage) {}
 
-    int getPercentage()
+    short getPercentage()
     {
         return percentage;
     }

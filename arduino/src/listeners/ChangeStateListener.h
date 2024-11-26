@@ -36,6 +36,7 @@ public:
         {
             appController->stillTimer->start();
             appController->userLCD->printOnDoorOpenMessage();
+            appController->door->open();
         }
         else
         {
@@ -44,6 +45,7 @@ public:
 
         if (changeStateEvent->getNewState() == Full)
         {
+            appController->serial->wasteError();
             appController->L1->switchOff();
             appController->L2->switchOn();
             appController->userLCD->printContainerFull();
@@ -56,6 +58,11 @@ public:
             appController->L1->switchOff();
             appController->L2->switchOn();
             appController->door->close();
+        }
+
+        if (changeStateEvent->getNewState() != MaxTemperature && changeStateEvent->getNewState() != Full)
+        {
+            appController->L2->switchOff();
         }
     }
 };

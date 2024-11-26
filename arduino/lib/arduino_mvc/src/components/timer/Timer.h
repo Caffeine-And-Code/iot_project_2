@@ -14,6 +14,7 @@ class Timer : public Component
     Event *triggerEvent;
     bool shouldTrigger;
     bool trigger;
+    bool isStopped;
 
 public:
     Timer(Controller *controller, Event *triggerEvent);

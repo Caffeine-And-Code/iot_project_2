@@ -21,9 +21,11 @@
 #define MAX_WASTE_CM 30
 #define MIN_WASTE_CM 5
 
-#define MAX_TEMP 20
+#define MAX_TEMP 30
 #define MAX_TEMP_TIME_SECONDS 5
 
 #define STATE_MACHINE_FRESH_RATE 100
+
+// #define DEBUG_APP
 
 #endif

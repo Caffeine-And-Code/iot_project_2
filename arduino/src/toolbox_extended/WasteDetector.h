@@ -3,12 +3,27 @@
 #include "sensors/UltrasoundProximity.h"
 #include "Events/WasteUpdateEvent.h"
 #include "config/Config.h"
+#include "ChangeNotifier.h"
 
-class WasteDetector : UltrasoundProximity
+class WasteDetector : UltrasoundProximity, ChangeNotifier
 {
+private:
+    short lastValue = -1;
+    short currentValue = -2;
+
 public:
     WasteDetector(unsigned char trigPin, unsigned char echoPint, Temperature *temperature) : UltrasoundProximity(trigPin, echoPint, temperature) {}
     short getFullPercentage()
+    {
+        return this->currentValue;
+    }
+
+    bool isFull()
+    {
+        return getFullPercentage() == 100;
+    }
+
+    bool hasChanged() override
     {
         short distance = this->getDistance();
         if (distance < MIN_WASTE_CM)
@@ -25,12 +40,9 @@ public:
         distance = interval - distance;
 
         short value = ceil(distance * 100 / interval);
-        return value;
-    }
-
-    bool isFull()
-    {
-        return getFullPercentage() == 100;
+        this->lastValue = this->currentValue;
+        this->currentValue = value;
+        return this->currentValue != this->lastValue;
     }
 };
 

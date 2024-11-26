@@ -10,6 +10,8 @@ class SerialAgent
 public:
     void updateWasteLevel(short percentageLevel);
     void updateTemperature(short temperature);
+    void wasteError();
+    void temperatureError();
     bool emptyContainer();
     bool fixTemperature();
 };

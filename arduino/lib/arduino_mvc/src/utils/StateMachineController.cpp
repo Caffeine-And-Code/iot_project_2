@@ -12,12 +12,18 @@ void StateMachineController::addState(int stateId, void (*callback)())
 
 void StateMachineController::changeState(int stateId)
 {
-    this->stateMachine->changeState(stateId);
+    if (stateId != this->getCurrentState())
+        this->stateMachine->changeState(stateId);
 }
 
 int StateMachineController::getCurrentState()
 {
     return this->stateMachine->getCurrentState();
+}
+
+unsigned long StateMachineController::getCurrentStateIterationAmount()
+{
+    this->stateMachine->getCurrentStateIterationAmount();
 }
 
 void StateMachineController::setup() {}

@@ -14,7 +14,7 @@ AppController controller;
 
 void AppController::setup()
 {
-    this->disableVerbose();
+    this->enableVerbose();
 
     this->addState(Available, availableRoutine);
     this->addState(Sleep, sleepRouting);
@@ -73,19 +73,22 @@ void sleepRouting()
     controller.userLCD->wakeUp();
     controller.changeState(Available);
 }
+
 void doorOpenRoutine()
 {
-    controller.sleepTimer->update();
-    controller.door->open();
+    controller.stillTimer->update();
     if (controller.btnClose->isPressed())
     {
         controller.triggerEvent(new WasteStillEndEvent());
     }
     else
     {
-        auto wasteLevelPercentage = controller.wasteDetector->getFullPercentage();
-        controller.triggerEvent(new WasteUpdateEvent(wasteLevelPercentage));
-        if (wasteLevelPercentage == 100)
+        if (controller.wasteDetector->hasChanged() && controller.getCurrentStateIterationAmount() % 5 == 0)
+        {
+            auto wasteLevelPercentage = controller.wasteDetector->getFullPercentage();
+            controller.triggerEvent(new WasteUpdateEvent(wasteLevelPercentage));
+        }
+        if (controller.wasteDetector->getFullPercentage() == 100)
         {
             controller.changeState(Full);
         }
@@ -105,6 +108,7 @@ void maxTemperatureRoutine()
     if (controller.serial->fixTemperature())
     {
         controller.changeState(Available);
+        controller.temperatureAgent->reset();
     }
 }
 void onPIRTrigger()

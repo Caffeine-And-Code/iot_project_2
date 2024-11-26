@@ -28,6 +28,7 @@ void StateMachine::changeState(int stateId)
         {
             auto lastState = this->currentState;
             this->currentState = i;
+            this->currentStateIterations = 0;
             this->controller->triggerEvent(new ChangeStateEvent(
                 this->states[lastState], this->states[i]));
             break;
@@ -38,7 +39,12 @@ void StateMachine::changeState(int stateId)
 
 int StateMachine::getCurrentState()
 {
-    return this->currentState;
+    return this->states[this->currentState];
+}
+
+unsigned long StateMachine::getCurrentStateIterationAmount()
+{
+    return this->currentStateIterations;
 }
 
 void StateMachine::update()
@@ -46,6 +52,9 @@ void StateMachine::update()
     if (this->internalTimer->runUpdateAndCheckTrigger())
     {
         if (this->currentState >= 0 && this->currentState < this->currentStateIndex)
+        {
+            this->currentStateIterations++;
             this->stateCallbacks[this->currentState]();
+        }
     }
 }

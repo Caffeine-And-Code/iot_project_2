@@ -6,6 +6,7 @@ Timer::Timer(Controller *controller, Event *triggerEvent) : triggerEvent(trigger
     this->lastCheckMillis = 0;
     this->running = false;
     this->shouldTrigger = true;
+    this->isStopped = false;
 }
 
 Timer::Timer(Controller *controller) : triggerEvent(triggerEvent),
@@ -14,6 +15,7 @@ Timer::Timer(Controller *controller) : triggerEvent(triggerEvent),
     this->lastCheckMillis = 0;
     this->running = false;
     this->shouldTrigger = false;
+    this->isStopped = false;
 }
 
 void Timer::init(unsigned long time, bool loop)
@@ -36,16 +38,18 @@ void Timer::restart()
 {
     this->running = true;
     this->lastCheckMillis = millis();
+    this->isStopped = false;
 }
 
 void Timer::stop()
 {
     this->running = false;
+    this->isStopped = true;
 }
 
 void Timer::update()
 {
-    if (this->running && this->lastCheckMillis + this->time < millis())
+    if (!this->isStopped && this->running && this->lastCheckMillis + this->time < millis())
     {
         if (!this->loop)
         {

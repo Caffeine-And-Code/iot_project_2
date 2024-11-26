@@ -14,6 +14,7 @@ protected:
     void (*stateCallbacks[MAX_STATES])();
     int currentStateIndex = 0;
     Timer *internalTimer;
+    unsigned long currentStateIterations = 0;
 
 public:
     StateMachine(Controller *controller, unsigned long runDelay);
@@ -22,6 +23,7 @@ public:
 
     void changeState(int stateId);
     int getCurrentState();
+    unsigned long getCurrentStateIterationAmount();
 
     void update();
 };

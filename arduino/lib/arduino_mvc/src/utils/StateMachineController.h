@@ -16,6 +16,7 @@ public:
 
     void changeState(int stateId);
     int getCurrentState();
+    unsigned long getCurrentStateIterationAmount();
 
     void setup();
 
