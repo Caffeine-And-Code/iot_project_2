@@ -17,7 +17,8 @@ class TestIO(InterfaceIO):
 
     def listen_runtime(self, readQueue: queue.Queue, wait: int):
         while self.running:
-            readQueue.put({"fluidLevel": randint(0,100), "temperature": randint(-20, 51)})
+            readQueue.put(randint(0,100) + "W")
+            readQueue.put(randint(-20, 51) + "T")
             time.sleep(wait)
     
     def close(self):

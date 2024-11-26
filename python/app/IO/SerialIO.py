@@ -24,11 +24,7 @@ class SerialIO(InterfaceIO):
             while self.running:
                 line = ser.readline().decode('utf-8').strip()
                 
-                if line.isdigit():
-                    number = int(line)
-                    if 0 <= number <= 100:
-                        readQueue.put(number)
-                time.sleep(0.1)
+                readQueue.put(line)
                 while not messageQueue.empty():
                     message = f"{messageQueue.get()}"
                     ser.write(message.encode("utf-8"))

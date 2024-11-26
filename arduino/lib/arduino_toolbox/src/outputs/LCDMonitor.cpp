@@ -54,7 +54,6 @@ void LCDMonitor::printSlideShow(String toPrint, unsigned short row, unsigned sho
 
 void LCDMonitor::printCentered(String toPrint, unsigned short row)
 {
-    Serial.println(toPrint);
     unsigned short len = toPrint.length();
     unsigned short start = (this->columns - len) / 2;
     this->print(row, start, toPrint, true);

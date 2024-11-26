@@ -39,7 +39,7 @@ void EventScheduler::trigger()
         Event *event = this->eventQueue[this->currentQueueIndex];
         if (event != nullptr)
         {
-            for (int i = 0; i < currentIndex; i++)
+            for (unsigned short i = 0; i < currentIndex; i++)
             {
                 if (event->isEvent(this->scheduler[i]->eventID))
                 {

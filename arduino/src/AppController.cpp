@@ -14,7 +14,7 @@ AppController controller;
 
 void AppController::setup()
 {
-    this->enableVerbose();
+    this->disableVerbose();
 
     this->addState(Available, availableRoutine);
     this->addState(Sleep, sleepRouting);
@@ -109,5 +109,5 @@ void maxTemperatureRoutine()
 }
 void onPIRTrigger()
 {
-    Serial.println("Triggered PIR interrupt");
+    controller.println("Triggered PIR interrupt");
 }

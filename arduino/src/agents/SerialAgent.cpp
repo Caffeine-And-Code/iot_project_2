@@ -2,12 +2,12 @@
 
 void SerialAgent::updateWasteLevel(short percentageLevel)
 {
-    String message = "{\"fluidLevel\":" + String(percentageLevel) + "}";
+    String message = String(percentageLevel) + "W\n";
     Serial.print(message);
 }
 void SerialAgent::updateTemperature(short temperature)
 {
-    String message = "{\"temperature\":" + String(temperature) + "}";
+    String message = String(temperature) + "T\n";
     Serial.print(message);
 }
 
