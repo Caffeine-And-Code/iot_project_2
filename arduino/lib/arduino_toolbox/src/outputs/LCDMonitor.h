@@ -6,16 +6,16 @@
 class LCDMonitor
 {
 private:
-    int rows = 0;
-    int columns = 0;
+    unsigned short rows = 0;
+    unsigned short columns = 0;
 
 public:
     LiquidCrystal_I2C *monitor;
-    LCDMonitor(uint8_t lcdAddr, int rows, int columns);
-    void print(int row, int col, String chars, bool withClean = false);
+    LCDMonitor(uint8_t lcdAddr, unsigned short rows, unsigned short columns);
+    void print(unsigned short row, unsigned short col, String chars, bool withClean = false);
     void clean();
-    void printSlideShow(String toPrint, int row, int endCol, int animationDelay = 150);
-    void printCentered(String toPrint, int row);
+    void printSlideShow(String toPrint, unsigned short row, unsigned short endCol, int animationDelay = 150);
+    void printCentered(String toPrint, unsigned short row);
 };
 
 #endif

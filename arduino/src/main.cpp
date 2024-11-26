@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#define DEBUG
+// #define DEBUG
 #ifndef DEBUG
 #include "AppController.h"
 #else

@@ -4,9 +4,11 @@
 
 class WakeUpEvent : public Event
 {
-    String getEventName()
+public:
+    static const short EventID = 11;
+    short getEventID() override
     {
-        return "WakeUpEvent";
+        return this->EventID;
     }
 };
 

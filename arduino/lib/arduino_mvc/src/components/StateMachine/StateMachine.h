@@ -14,10 +14,9 @@ protected:
     void (*stateCallbacks[MAX_STATES])();
     int currentStateIndex = 0;
     Timer *internalTimer;
-    long runDelay;
 
 public:
-    StateMachine(Controller *controller, long runDelay);
+    StateMachine(Controller *controller, unsigned long runDelay);
 
     void addState(int stateId, void (*callback)());
 

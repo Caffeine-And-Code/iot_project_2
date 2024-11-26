@@ -1,12 +1,12 @@
 #include "PIR.h"
 #include "Arduino.h"
 
-PIR::PIR(int pin) : MonoPin(pin)
+PIR::PIR(unsigned char pin) : MonoPin(pin)
 {
     pinMode(this->pin, INPUT);
 }
 
-void PIR::calibrate(int calibrationSeconds)
+void PIR::calibrate(unsigned char calibrationSeconds)
 {
     delay(calibrationSeconds * 1000);
 }

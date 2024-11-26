@@ -6,9 +6,11 @@ class Event
 {
 protected:
 public:
-    virtual ~Event() = default;
-    virtual String getEventName() = 0;
-    bool isEvent(String name);
+    virtual short getEventID()
+    {
+        return 0;
+    }
+    bool isEvent(short id);
 };
 
 #endif

@@ -15,9 +15,10 @@ public:
         return percentage;
     }
 
-    String getEventName()
+    static const short EventID = 13;
+    short getEventID() override
     {
-        return "WasteUpdate";
+        return this->EventID;
     }
 };
 

@@ -5,7 +5,7 @@
 class PeopleDetector : PIR
 {
 public:
-    PeopleDetector(int pin) : PIR(pin) {}
+    PeopleDetector(unsigned char pin) : PIR(pin) {}
 
     bool isPersonDetected()
     {

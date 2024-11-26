@@ -7,9 +7,9 @@ class Listener;
 class EventAssociation
 {
 public:
-    String eventName;
+    short eventID;
     Listener *listener;
-    EventAssociation(String eventName, Listener *listener);
+    EventAssociation(short eventID, Listener *listener);
 };
 
 #endif

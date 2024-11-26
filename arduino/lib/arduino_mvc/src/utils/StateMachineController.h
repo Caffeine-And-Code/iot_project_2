@@ -11,7 +11,7 @@ protected:
     StateMachine *stateMachine;
 
 public:
-    StateMachineController(long runDelay);
+    StateMachineController(unsigned long runDelay);
     void addState(int stateId, void (*callback)());
 
     void changeState(int stateId);

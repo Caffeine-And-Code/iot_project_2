@@ -4,9 +4,11 @@
 
 class SleepTimerEvent : public Event
 {
-    String getEventName()
+public:
+    static const short EventID = 10;
+    short getEventID() override
     {
-        return "SleepTimerEvent";
+        return this->EventID;
     }
 };
 

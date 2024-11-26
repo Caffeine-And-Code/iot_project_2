@@ -1,7 +1,7 @@
 #include "StateMachineController.h"
 #include "Arduino.h"
 
-StateMachineController::StateMachineController(long runDelay = 0)
+StateMachineController::StateMachineController(unsigned long runDelay = 0)
 {
     this->stateMachine = new StateMachine(this, runDelay);
 }
@@ -24,6 +24,13 @@ void StateMachineController::setup() {}
 
 void StateMachineController::loop()
 {
-    this->updateComponents();
-    this->stateMachine->update();
+    if (this->eventScheduler->hasEventToTrigger())
+    {
+        this->eventScheduler->trigger();
+    }
+    else
+    {
+        this->updateComponents();
+        this->stateMachine->update();
+    }
 }

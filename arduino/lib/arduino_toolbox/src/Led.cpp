@@ -1,7 +1,7 @@
 #include "Led.h"
 #include "Arduino.h"
 
-Led::Led(int pin) : MonoPin(pin)
+Led::Led(unsigned char pin) : MonoPin(pin)
 {
     pinMode(this->pin, OUTPUT);
 }

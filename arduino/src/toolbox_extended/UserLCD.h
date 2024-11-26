@@ -22,6 +22,7 @@ public:
     void printWasteReceiver()
     {
         this->printCentered("WASTE RECEIVED", 1);
+        this->printCentered(" ", 2);
     }
 
     void printContainerFull()
@@ -33,6 +34,7 @@ public:
     void printProblemDetected()
     {
         this->printCentered("PROBLEM DETECTED", 1);
+        this->printCentered(" ", 2);
     }
 
     void empty()

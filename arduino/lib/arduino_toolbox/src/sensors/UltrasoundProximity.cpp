@@ -1,7 +1,7 @@
 #include "UltrasoundProximity.h"
 #include "Arduino.h"
 
-UltrasoundProximity::UltrasoundProximity(int trigPin, int echoPint, Temperature *temperature) : DoublePin(trigPin, echoPint)
+UltrasoundProximity::UltrasoundProximity(unsigned char trigPin, unsigned char echoPint, Temperature *temperature) : DoublePin(trigPin, echoPint)
 {
     pinMode(this->firstPin, OUTPUT);
     pinMode(this->secondPin, INPUT);
@@ -9,7 +9,7 @@ UltrasoundProximity::UltrasoundProximity(int trigPin, int echoPint, Temperature 
     this->useSensor = true;
 }
 
-UltrasoundProximity::UltrasoundProximity(int trigPin, int echoPint, int temperature) : DoublePin(trigPin, echoPint)
+UltrasoundProximity::UltrasoundProximity(unsigned char trigPin, unsigned char echoPint, short temperature) : DoublePin(trigPin, echoPint)
 {
     pinMode(this->firstPin, OUTPUT);
     pinMode(this->secondPin, INPUT);
@@ -17,7 +17,7 @@ UltrasoundProximity::UltrasoundProximity(int trigPin, int echoPint, int temperat
     this->useSensor = false;
 }
 
-int UltrasoundProximity::getDistance()
+short UltrasoundProximity::getDistance()
 {
     digitalWrite(this->firstPin, LOW);
     delayMicroseconds(3);
@@ -25,7 +25,7 @@ int UltrasoundProximity::getDistance()
     delayMicroseconds(5);
     digitalWrite(this->firstPin, LOW);
 
-    int temperature = this->temperature;
+    short temperature = this->temperature;
     if (this->useSensor)
     {
         temperature = this->temperatureSensor->getTemperature();

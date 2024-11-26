@@ -12,7 +12,7 @@ private:
     int lastValue;
 
 public:
-    Temperature(int pin);
+    Temperature(unsigned char pin);
     int getTemperature();
     bool hasChanged();
 };

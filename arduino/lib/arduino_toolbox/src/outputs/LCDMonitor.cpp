@@ -1,7 +1,7 @@
 #include "LCDMonitor.h"
 #include "Arduino.h"
 
-LCDMonitor::LCDMonitor(uint8_t lcdAddr, int rows, int columns)
+LCDMonitor::LCDMonitor(uint8_t lcdAddr, unsigned short rows, unsigned short columns)
 {
     this->rows = rows;
     this->columns = columns;
@@ -10,17 +10,17 @@ LCDMonitor::LCDMonitor(uint8_t lcdAddr, int rows, int columns)
     this->monitor->backlight();
 }
 
-void LCDMonitor::print(int row, int col, String chars, bool withClean = false)
+void LCDMonitor::print(unsigned short row, unsigned short col, String chars, bool withClean = false)
 {
-    for (int i = 0; i < col && withClean; i++)
+    for (unsigned short i = 0; i < col && withClean; i++)
     {
         this->monitor->setCursor(i, row);
         this->monitor->print(" ");
     }
     this->monitor->setCursor(col, row);
     this->monitor->print(chars);
-    int length = chars.length();
-    for (int i = col + length + 1; i < this->columns && withClean; i++)
+    unsigned short length = chars.length();
+    for (unsigned short i = col + length; i < this->columns && withClean; i++)
     {
         this->monitor->setCursor(i, row);
         this->monitor->print(" ");
@@ -29,18 +29,18 @@ void LCDMonitor::print(int row, int col, String chars, bool withClean = false)
 
 void LCDMonitor::clean()
 {
-    for (int i = 0; i < this->rows; i++)
+    for (unsigned short i = 0; i < this->rows; i++)
     {
         this->print(i, 0, "", true);
     }
 }
 
-void LCDMonitor::printSlideShow(String toPrint, int row, int endCol, int animationDelay = 150)
+void LCDMonitor::printSlideShow(String toPrint, unsigned short row, unsigned short endCol, int animationDelay = 150)
 {
     auto strLen = toPrint.length();
-    for (unsigned int i = 0; i < strLen; i++)
+    for (unsigned short i = 0; i < strLen; i++)
     {
-        for (unsigned int j = 0; j <= endCol - i; j++)
+        for (unsigned short j = 0; j <= endCol - i; j++)
         {
             int prev = j - 1 > 0 ? j - 1 : 0;
             this->monitor->setCursor(prev, row);
@@ -52,9 +52,10 @@ void LCDMonitor::printSlideShow(String toPrint, int row, int endCol, int animati
     }
 }
 
-void LCDMonitor::printCentered(String toPrint, int row)
+void LCDMonitor::printCentered(String toPrint, unsigned short row)
 {
-    int len = toPrint.length();
-    int start = (this->columns - len) / 2;
+    Serial.println(toPrint);
+    unsigned short len = toPrint.length();
+    unsigned short start = (this->columns - len) / 2;
     this->print(row, start, toPrint, true);
 }

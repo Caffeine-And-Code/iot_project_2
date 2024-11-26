@@ -11,11 +11,11 @@ class ServoMotor : public MonoPin
 {
 protected:
     Servo servo;
-    int lastValue = -1;
+    short lastValue = -1;
 
 public:
-    ServoMotor(int pin);
-    void move(int value);
+    ServoMotor(unsigned char pin);
+    void move(short value);
     void open();
     void close();
 };

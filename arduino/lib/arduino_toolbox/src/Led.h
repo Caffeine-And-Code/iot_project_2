@@ -6,7 +6,7 @@
 class Led : public MonoPin
 {
 public:
-    Led(int pin);
+    Led(unsigned char pin);
     void switchOn();
     void switchOff();
 };

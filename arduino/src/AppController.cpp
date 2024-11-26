@@ -38,11 +38,11 @@ void AppController::setup()
     stillTimer = new Timer(this, new WasteStillEndEvent());
     stillTimer->init(T1, false);
 
-    this->eventScheduler->addSchedule("ChangeStateEvent", new ChangeStateListener());
-    this->eventScheduler->addSchedule("SleepTimerEvent", new SleepTimerListener());
-    this->eventScheduler->addSchedule("WakeUpEvent", new WakeUpListener());
-    this->eventScheduler->addSchedule("WasteStillEndEvent", new WasteStIllEndListener());
-    this->eventScheduler->addSchedule("WasteUpdate", new WasteUpdateListener());
+    this->eventScheduler->addSchedule(ChangeStateEvent::EventID, new ChangeStateListener());
+    this->eventScheduler->addSchedule(SleepTimerEvent::EventID, new SleepTimerListener());
+    this->eventScheduler->addSchedule(WakeUpEvent::EventID, new WakeUpListener());
+    this->eventScheduler->addSchedule(WasteStillEndEvent::EventID, new WasteStIllEndListener());
+    this->eventScheduler->addSchedule(WasteUpdateEvent::EventID, new WasteUpdateListener());
 
     this->changeState(Available);
 
@@ -69,6 +69,7 @@ void sleepRouting()
     sleep_enable();
     sleep_mode();
     sleep_disable();
+    controller.triggerEvent(new WakeUpEvent());
     controller.userLCD->wakeUp();
     controller.changeState(Available);
 }
@@ -76,15 +77,18 @@ void doorOpenRoutine()
 {
     controller.sleepTimer->update();
     controller.door->open();
-    if (controller.btnClose->hasChanged() && controller.btnClose->isPressed())
+    if (controller.btnClose->isPressed())
     {
         controller.triggerEvent(new WasteStillEndEvent());
     }
-    auto wasteLevelPercentage = controller.wasteDetector->getFullPercentage();
-    controller.triggerEvent(new WasteUpdateEvent(wasteLevelPercentage));
-    if (wasteLevelPercentage == 100)
+    else
     {
-        controller.changeState(Full);
+        auto wasteLevelPercentage = controller.wasteDetector->getFullPercentage();
+        controller.triggerEvent(new WasteUpdateEvent(wasteLevelPercentage));
+        if (wasteLevelPercentage == 100)
+        {
+            controller.changeState(Full);
+        }
     }
 }
 void fullRoutine()
@@ -105,6 +109,5 @@ void maxTemperatureRoutine()
 }
 void onPIRTrigger()
 {
-    controller.println("Triggered PIR interrupt");
-    controller.triggerEvent(new WakeUpEvent());
+    Serial.println("Triggered PIR interrupt");
 }

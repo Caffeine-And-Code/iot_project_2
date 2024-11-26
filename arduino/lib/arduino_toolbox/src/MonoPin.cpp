@@ -1,6 +1,6 @@
 #include "MonoPin.h"
 
-MonoPin::MonoPin(int pin)
+MonoPin::MonoPin(unsigned char pin)
 {
     this->pin = pin;
 }

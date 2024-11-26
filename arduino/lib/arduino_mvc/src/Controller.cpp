@@ -4,7 +4,6 @@
 Controller::Controller()
 {
     this->eventScheduler = new EventScheduler(this);
-    this->observableManager = new ObservableManager(this);
 }
 
 void Controller::updateComponents()
@@ -25,7 +24,7 @@ void Controller::addComponent(Component *component)
 
 void Controller::triggerEvent(Event *event)
 {
-    this->eventScheduler->trigger(event);
+    this->eventScheduler->schedule(event);
 }
 
 void Controller::print(String logWrite)

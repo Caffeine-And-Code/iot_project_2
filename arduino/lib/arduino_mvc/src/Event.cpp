@@ -1,6 +1,6 @@
 #include "Event.h"
 
-bool Event::isEvent(String name)
+bool Event::isEvent(short id)
 {
-    return this->getEventName().compareTo(name) == 0;
+    return this->getEventID() == id;
 }

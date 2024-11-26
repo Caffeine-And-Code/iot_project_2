@@ -1,11 +1,11 @@
 #include "SerialAgent.h"
 
-void SerialAgent::updateWasteLevel(int percentageLevel)
+void SerialAgent::updateWasteLevel(short percentageLevel)
 {
     String message = "{\"fluidLevel\":" + String(percentageLevel) + "}";
     Serial.print(message);
 }
-void SerialAgent::updateTemperature(int temperature)
+void SerialAgent::updateTemperature(short temperature)
 {
     String message = "{\"temperature\":" + String(temperature) + "}";
     Serial.print(message);
@@ -13,7 +13,7 @@ void SerialAgent::updateTemperature(int temperature)
 
 bool SerialAgent::emptyContainer()
 {
-    if(Serial.available() > 0)
+    if (Serial.available() > 0)
     {
         int msg = Serial.parseInt();
         return msg == 1;
@@ -22,7 +22,7 @@ bool SerialAgent::emptyContainer()
 }
 bool SerialAgent::fixTemperature()
 {
-    if(Serial.available() > 0)
+    if (Serial.available() > 0)
     {
         int msg = Serial.parseInt();
         return msg == 2;

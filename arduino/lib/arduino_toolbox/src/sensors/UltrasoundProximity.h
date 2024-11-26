@@ -9,15 +9,15 @@ class UltrasoundProximity : public DoublePin, public ChangeNotifier
 {
 private:
     Temperature *temperatureSensor;
-    int temperature = 0;
+    short temperature = 0;
     bool useSensor = false;
-    int lastValue = 0;
+    short lastValue = 0;
 
 public:
-    UltrasoundProximity(int trigPin, int echoPint, Temperature *temperature);
-    UltrasoundProximity(int trigPin, int echoPint, int temperature);
+    UltrasoundProximity(unsigned char trigPin, unsigned char echoPint, Temperature *temperature);
+    UltrasoundProximity(unsigned char trigPin, unsigned char echoPint, short temperature);
     // Return the distance in cm centimeters
-    int getDistance();
+    short getDistance();
     bool hasChanged();
 };
 

@@ -8,8 +8,8 @@
 class Timer : public Component
 {
     bool loop;
-    long time;
-    long lastCheckMillis;
+    unsigned long time;
+    unsigned long lastCheckMillis;
     bool running;
     Event *triggerEvent;
     bool shouldTrigger;
@@ -18,7 +18,7 @@ class Timer : public Component
 public:
     Timer(Controller *controller, Event *triggerEvent);
     Timer(Controller *controller);
-    void init(long time, bool loop);
+    void init(unsigned long time, bool loop);
 
     bool isRunning();
 

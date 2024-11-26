@@ -10,9 +10,13 @@ protected:
     int newState;
 
 public:
+    static const short EventID = 1;
     ChangeStateEvent(int lastState, int newState);
 
-    String getEventName();
+    short getEventID() override
+    {
+        return this->EventID;
+    }
     int getLastState();
     int getNewState();
 };

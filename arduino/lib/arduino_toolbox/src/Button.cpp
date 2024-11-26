@@ -1,7 +1,7 @@
 #include "Button.h"
 #include "Arduino.h"
 
-Button::Button(int pin) : MonoPin(pin)
+Button::Button(unsigned char pin) : MonoPin(pin)
 {
     pinMode(this->pin, INPUT);
 }

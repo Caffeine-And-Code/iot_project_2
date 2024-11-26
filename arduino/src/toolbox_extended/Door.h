@@ -5,7 +5,7 @@
 class Door : ServoMotor
 {
 public:
-    Door(int pin) : ServoMotor(pin) {}
+    Door(unsigned char pin) : ServoMotor(pin) {}
 
     void open()
     {

@@ -5,11 +5,9 @@
 #include "Arduino.h"
 #include "Component.h"
 #include "EventScheduler.h"
-#include "ObservableManager.h"
 
 class EventScheduler;
 class Event;
-class ObservableManager;
 class Component;
 
 class Controller
@@ -22,7 +20,6 @@ protected:
 public:
     EventScheduler *
         eventScheduler;
-    ObservableManager *observableManager;
     Controller();
     virtual void setup() = 0;
     virtual void loop() = 0;

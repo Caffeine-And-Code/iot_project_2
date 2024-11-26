@@ -8,8 +8,8 @@ class AppController;
 class SerialAgent
 {
 public:
-    void updateWasteLevel(int percentageLevel);
-    void updateTemperature(int temperature);
+    void updateWasteLevel(short percentageLevel);
+    void updateTemperature(short temperature);
     bool emptyContainer();
     bool fixTemperature();
 };

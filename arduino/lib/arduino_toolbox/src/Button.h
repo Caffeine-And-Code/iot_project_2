@@ -10,7 +10,7 @@ private:
     bool lastValue = false;
 
 public:
-    Button(int pin);
+    Button(unsigned char pin);
     bool isPressed();
     bool hasChanged();
 };

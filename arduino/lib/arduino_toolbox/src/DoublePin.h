@@ -4,11 +4,11 @@
 class DoublePin
 {
 protected:
-    int firstPin;
-    int secondPin;
+    unsigned char firstPin;
+    unsigned char secondPin;
 
 public:
-    DoublePin(int firstPin, int secondPin);
+    DoublePin(unsigned char firstPin, unsigned char secondPin);
 };
 
 #endif

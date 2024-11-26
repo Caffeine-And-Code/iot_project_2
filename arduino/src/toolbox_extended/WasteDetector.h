@@ -7,10 +7,10 @@
 class WasteDetector : UltrasoundProximity
 {
 public:
-    WasteDetector(int trigPin, int echoPint, Temperature *temperature) : UltrasoundProximity(trigPin, echoPint, temperature) {}
-    int getFullPercentage()
+    WasteDetector(unsigned char trigPin, unsigned char echoPint, Temperature *temperature) : UltrasoundProximity(trigPin, echoPint, temperature) {}
+    short getFullPercentage()
     {
-        auto distance = this->getDistance();
+        short distance = this->getDistance();
         if (distance < MIN_WASTE_CM)
         {
             distance = MIN_WASTE_CM;
@@ -21,9 +21,11 @@ public:
         }
 
         distance -= MIN_WASTE_CM;
-        auto interval = MAX_WASTE_CM - MIN_WASTE_CM;
+        short interval = MAX_WASTE_CM - MIN_WASTE_CM;
+        distance = interval - distance;
 
-        return ceil(distance * 100 / interval);
+        short value = ceil(distance * 100 / interval);
+        return value;
     }
 
     bool isFull()

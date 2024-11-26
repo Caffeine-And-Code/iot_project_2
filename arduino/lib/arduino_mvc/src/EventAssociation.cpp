@@ -1,7 +1,7 @@
 #include "EventAssociation.h"
 
-EventAssociation::EventAssociation(String eventName, Listener *listener)
+EventAssociation::EventAssociation(short eventID, Listener *listener)
 {
-    this->eventName = eventName;
+    this->eventID = eventID;
     this->listener = listener;
 }

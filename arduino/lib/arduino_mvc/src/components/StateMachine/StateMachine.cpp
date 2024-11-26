@@ -1,12 +1,12 @@
 #include "StateMachine.h"
 #include "Arduino.h"
 
-StateMachine::StateMachine(Controller *controller, long runDelay) : Component(controller)
+StateMachine::StateMachine(Controller *controller, unsigned long runDelay) : Component(controller)
 {
     this->currentState = -1;
     this->currentStateIndex = 0;
-    this->runDelay = runDelay;
     this->internalTimer = new Timer(controller);
+    this->internalTimer->init(runDelay, true);
 }
 
 void StateMachine::addState(int stateId, void (*callback)())

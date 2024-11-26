@@ -4,9 +4,11 @@
 
 class WasteStillEndEvent : public Event
 {
-    String getEventName()
+public:
+    static const short EventID = 12;
+    short getEventID() override
     {
-        return "WasteStillEndEvent";
+        return this->EventID;
     }
 };
 

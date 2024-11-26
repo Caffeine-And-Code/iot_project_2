@@ -1,11 +1,11 @@
 #include "ServoMotor.h"
 
-ServoMotor::ServoMotor(int pin) : MonoPin(pin)
+ServoMotor::ServoMotor(unsigned char pin) : MonoPin(pin)
 {
     this->servo.attach(this->pin);
 }
 
-void ServoMotor::move(int value)
+void ServoMotor::move(short value)
 {
     if (lastValue < 0 || lastValue != value)
     {

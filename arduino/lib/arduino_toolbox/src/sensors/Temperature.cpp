@@ -1,7 +1,7 @@
 #include "Temperature.h"
 #include "Arduino.h"
 
-Temperature::Temperature(int pin) : MonoPin(pin)
+Temperature::Temperature(unsigned char pin) : MonoPin(pin)
 {
     pinMode(pin, INPUT);
 }

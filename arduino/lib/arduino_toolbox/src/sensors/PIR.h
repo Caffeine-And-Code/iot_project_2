@@ -10,9 +10,8 @@ protected:
     bool lastValue;
 
 public:
-    PIR(int pin);
-    void calibrate(int calibrationSeconds);
-    // True if someone is detected from the sensor
+    PIR(unsigned char pin);
+    void calibrate(unsigned char calibrationSeconds);
     bool hasDetected();
     bool hasChanged();
 };

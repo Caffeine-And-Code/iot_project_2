@@ -4,10 +4,10 @@
 class MonoPin
 {
 protected:
-    int pin;
+    unsigned char pin;
 
 public:
-    MonoPin(int pin);
+    MonoPin(unsigned char pin);
 };
 
 #endif

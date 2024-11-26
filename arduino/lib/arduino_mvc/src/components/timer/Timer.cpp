@@ -5,6 +5,7 @@ Timer::Timer(Controller *controller, Event *triggerEvent) : triggerEvent(trigger
 {
     this->lastCheckMillis = 0;
     this->running = false;
+    this->shouldTrigger = true;
 }
 
 Timer::Timer(Controller *controller) : triggerEvent(triggerEvent),
@@ -15,7 +16,7 @@ Timer::Timer(Controller *controller) : triggerEvent(triggerEvent),
     this->shouldTrigger = false;
 }
 
-void Timer::init(long time, bool loop)
+void Timer::init(unsigned long time, bool loop)
 {
     this->time = time;
     this->loop = loop;
@@ -57,12 +58,15 @@ void Timer::update()
             this->controller->triggerEvent(this->triggerEvent);
         }
     }
-    this->trigger = false;
+    else
+    {
+        this->trigger = false;
+    }
 }
 
 bool Timer::runUpdateAndCheckTrigger()
 {
-    if (this->isRunning())
+    if (!this->isRunning())
     {
         this->restart();
     }
