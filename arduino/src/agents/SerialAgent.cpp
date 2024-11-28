@@ -3,25 +3,21 @@
 
 void SerialAgent::updateWasteLevel(short percentageLevel)
 {
-    String message = String(percentageLevel) + "W\n";
-    Serial.print(message);
+    Serial.print(String(percentageLevel) + "W\n");
 }
 void SerialAgent::updateTemperature(short temperature)
 {
-    String message = String(temperature) + "T\n";
-    Serial.print(message);
+    Serial.print(String(temperature) + "T\n");
 }
 
 void SerialAgent::wasteError()
 {
-    String message = "EW\n";
-    Serial.print(message);
+    Serial.print("EW\n");
 }
 
 void SerialAgent::temperatureError()
 {
-    String message = "ET\n";
-    Serial.print(message);
+    Serial.print("ET\n");
 }
 
 bool SerialAgent::emptyContainer()

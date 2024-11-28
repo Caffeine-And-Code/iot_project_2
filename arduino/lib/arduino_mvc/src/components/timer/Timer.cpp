@@ -1,7 +1,7 @@
 #include "Timer.h"
 
 Timer::Timer(Controller *controller, Event *triggerEvent) : triggerEvent(triggerEvent),
-                                                            Component(controller)
+                                                            controller(controller)
 {
     this->lastCheckMillis = 0;
     this->running = false;
@@ -9,8 +9,7 @@ Timer::Timer(Controller *controller, Event *triggerEvent) : triggerEvent(trigger
     this->isStopped = false;
 }
 
-Timer::Timer(Controller *controller) : triggerEvent(triggerEvent),
-                                       Component(controller)
+Timer::Timer()
 {
     this->lastCheckMillis = 0;
     this->running = false;

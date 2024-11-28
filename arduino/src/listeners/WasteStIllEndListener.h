@@ -14,7 +14,7 @@ class WasteStIllEndListener : public Listener
         appController->userLCD->printWasteReceiver();
         appController->door->close();
         delay(T2);
-        appController->changeState(Available);
+        appController->stateMachineTask->changeState(Available);
     }
 };
 

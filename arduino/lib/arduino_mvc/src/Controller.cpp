@@ -1,25 +1,17 @@
 #include "Controller.h"
 #include "Arduino.h"
 
+class Scheduler;
+
 Controller::Controller()
 {
     this->eventScheduler = new EventScheduler(this);
+    this->scheduler = new Scheduler();
 }
 
-void Controller::updateComponents()
+void Controller::schedule()
 {
-    for (int i = 0; i < this->currentComponentIndex; i++)
-    {
-        this->components[i]->update();
-    }
-}
-
-void Controller::addComponent(Component *component)
-{
-    if (this->currentComponentIndex < MAX_COMPONENTS)
-    {
-        this->components[this->currentComponentIndex++] = component;
-    }
+    this->scheduler->schedule();
 }
 
 void Controller::triggerEvent(Event *event)

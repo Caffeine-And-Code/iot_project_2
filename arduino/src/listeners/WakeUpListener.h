@@ -9,9 +9,9 @@ class WakeUpListener : public Listener
     void execute(Event *event, Controller *controller)
     {
         auto *appController = static_cast<AppController *>(controller);
-        if (appController->getCurrentState() == Sleep)
+        if (appController->stateMachineTask->getCurrentState() == Sleep)
         {
-            appController->changeState(Available);
+            appController->stateMachineTask->changeState(Available);
         }
     }
 };

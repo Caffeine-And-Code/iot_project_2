@@ -9,7 +9,7 @@ class SleepTimerListener : public Listener
     void execute(Event *event, Controller *controller)
     {
         auto *appController = static_cast<AppController *>(controller);
-        appController->changeState(Sleep);
+        appController->stateMachineTask->changeState(Sleep);
     }
 };
 

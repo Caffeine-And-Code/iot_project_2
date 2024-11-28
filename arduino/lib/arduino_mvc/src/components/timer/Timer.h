@@ -3,9 +3,10 @@
 #include "Controller.h"
 #include "Arduino.h"
 #include "Event.h"
-#include "Component.h"
 
-class Timer : public Component
+class Controller;
+
+class Timer
 {
     bool loop;
     unsigned long time;
@@ -15,10 +16,11 @@ class Timer : public Component
     bool shouldTrigger;
     bool trigger;
     bool isStopped;
+    Controller *controller;
 
 public:
     Timer(Controller *controller, Event *triggerEvent);
-    Timer(Controller *controller);
+    Timer();
     void init(unsigned long time, bool loop);
 
     bool isRunning();

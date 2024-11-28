@@ -14,13 +14,8 @@ AppController controller;
 
 void AppController::setup()
 {
-    this->enableVerbose();
+    this->disableVerbose();
 
-    this->addState(Available, availableRoutine);
-    this->addState(Sleep, sleepRouting);
-    this->addState(DoorOpen, doorOpenRoutine);
-    this->addState(Full, fullRoutine);
-    this->addState(MaxTemperature, maxTemperatureRoutine);
     L1 = new Led(L1_PIN);
     L2 = new Led(L2_PIN);
     door = new Door(DOOR_PIN);
@@ -31,7 +26,6 @@ void AppController::setup()
     btnClose = new Button(BTN_CLOSE_PIN);
     temperature = new Temperature(TEMPERATURE_PIN);
     wasteDetector = new WasteDetector(TRIG_PIN, ECHO_PIN, temperature);
-    temperatureAgent = new TemperatureAgent(this);
 
     sleepTimer = new Timer(this, new SleepTimerEvent());
     sleepTimer->init(SLEEP_TIMER_SECONDS * 1000, false);
@@ -44,73 +38,32 @@ void AppController::setup()
     this->eventScheduler->addSchedule(WasteStillEndEvent::EventID, new WasteStIllEndListener());
     this->eventScheduler->addSchedule(WasteUpdateEvent::EventID, new WasteUpdateListener());
 
-    this->changeState(Available);
-
-    this->addComponent(temperatureAgent);
     attachInterrupt(digitalPinToInterrupt(PIR_PIN), onPIRTrigger, RISING);
+
+    stateMachineTask = new StateMachineTask(this);
+    stateMachineTask->init(100);
+    temperatureTask = new TemperatureTask(this);
+    temperatureTask->init(500);
+
+    this->stateMachineTask->changeState(Available);
+
+    this->scheduler->init(100);
+    this->scheduler->addTask(stateMachineTask);
+    this->scheduler->addTask(temperatureTask);
 }
 
-void availableRoutine()
+void AppController::loop()
 {
-    controller.sleepTimer->update();
-    if (controller.btnOpen->isPressed())
+    if (this->eventScheduler->hasEventToTrigger())
     {
-        controller.changeState(DoorOpen);
-    }
-    if (controller.peopleDetector->isPersonDetected())
-    {
-        controller.sleepTimer->restart();
-    }
-}
-void sleepRouting()
-{
-    controller.userLCD->empty();
-    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
-    sleep_enable();
-    sleep_mode();
-    sleep_disable();
-    controller.triggerEvent(new WakeUpEvent());
-    controller.userLCD->wakeUp();
-    controller.changeState(Available);
-}
-
-void doorOpenRoutine()
-{
-    controller.stillTimer->update();
-    if (controller.btnClose->isPressed())
-    {
-        controller.triggerEvent(new WasteStillEndEvent());
+        this->eventScheduler->trigger();
     }
     else
     {
-        if (controller.wasteDetector->hasChanged() && controller.getCurrentStateIterationAmount() % 5 == 0)
-        {
-            auto wasteLevelPercentage = controller.wasteDetector->getFullPercentage();
-            controller.triggerEvent(new WasteUpdateEvent(wasteLevelPercentage));
-        }
-        if (controller.wasteDetector->getFullPercentage() == 100)
-        {
-            controller.changeState(Full);
-        }
+        this->scheduler->schedule();
     }
 }
-void fullRoutine()
-{
-    if (controller.serial->emptyContainer())
-    {
-        controller.door->reverseOpen();
-        delay(T3);
-        controller.changeState(Available);
-    }
-}
-void maxTemperatureRoutine()
-{
-    if (controller.serial->fixTemperature())
-    {
-        controller.changeState(Available);
-        controller.temperatureAgent->reset();
-    }
-}
+
 void onPIRTrigger()
 {
     controller.println("Triggered PIR interrupt");

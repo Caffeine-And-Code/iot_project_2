@@ -18,7 +18,7 @@
 #define T2 5000
 #define T3 5000
 
-#define MAX_WASTE_CM 30
+#define MAX_WASTE_CM 40
 #define MIN_WASTE_CM 5
 
 #define MAX_TEMP 30

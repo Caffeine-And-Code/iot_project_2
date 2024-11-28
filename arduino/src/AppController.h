@@ -2,7 +2,7 @@
 #define __APP_CONTROLLER__
 
 #include <Arduino.h>
-#include "utils/StateMachineController.h"
+#include "Controller.h"
 #include "enums/States.h"
 #include "Led.h"
 #include "config/Config.h"
@@ -16,21 +16,17 @@
 #include "components/timer/Timer.h"
 #include "toolbox_extended/WasteDetector.h"
 #include "sensors/Temperature.h"
-#include "agents/TemperatureAgent.h"
+#include "tasks/StateMachineTask.h"
+#include "tasks/TemperatureTask.h"
 
 class SerialAgent;
 
-void availableRoutine();
-void sleepRouting();
-void doorOpenRoutine();
-void fullRoutine();
-void emptyingRoutine();
-void maxTemperatureRoutine();
 void onPIRTrigger();
 
-class TemperatureAgent;
+class TemperatureTask;
+class StateMachineTask;
 
-class AppController : public StateMachineController
+class AppController : public Controller
 {
 
 public:
@@ -46,10 +42,12 @@ public:
     Timer *stillTimer;
     WasteDetector *wasteDetector;
     Temperature *temperature;
-    TemperatureAgent *temperatureAgent;
 
-    AppController() : StateMachineController((long)STATE_MACHINE_FRESH_RATE) {}
-    void setup();
+    StateMachineTask *stateMachineTask;
+    TemperatureTask *temperatureTask;
+
+    void setup() override;
+    void loop() override;
 };
 
 extern AppController controller;
