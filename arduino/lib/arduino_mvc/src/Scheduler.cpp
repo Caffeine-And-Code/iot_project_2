@@ -13,8 +13,6 @@ void Scheduler::init(int basePeriod)
     this->basePeriod = basePeriod;
     timerFlag = false;
     long period = 1000l * basePeriod;
-    // Timer1.initialize(period);
-    // Timer1.attachInterrupt(timerHandler);
     timer = new Timer();
     timer->init(basePeriod, true);
     nTasks = 0;

@@ -16,7 +16,8 @@ private:
 public:
     UltrasoundProximity(unsigned char trigPin, unsigned char echoPint, Temperature *temperature);
     UltrasoundProximity(unsigned char trigPin, unsigned char echoPint, short temperature);
-    // Return the distance in cm centimeters
+
+    /// @return the distance in cm (centimeters)
     short getDistance();
     bool hasChanged();
 };

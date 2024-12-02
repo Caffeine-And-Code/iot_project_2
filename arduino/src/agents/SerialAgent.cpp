@@ -3,46 +3,40 @@
 
 void SerialAgent::updateWasteLevel(short percentageLevel)
 {
-    Serial.print(String(percentageLevel) + "W\n");
+    Serial.print(String(percentageLevel));
+    Serial.println("W");
 }
 void SerialAgent::updateTemperature(short temperature)
 {
-    Serial.print(String(temperature) + "T\n");
+    Serial.print(temperature);
+    Serial.println("T");
 }
 
 void SerialAgent::wasteError()
 {
-    Serial.print("EW\n");
+    Serial.println("EW");
 }
 
 void SerialAgent::temperatureError()
 {
-    Serial.print("ET\n");
+    Serial.println("ET");
 }
 
 bool SerialAgent::emptyContainer()
 {
-#ifndef DEBUG_APP
     if (Serial.available() > 0)
     {
         int msg = Serial.parseInt();
         return msg == 1;
     }
     return false;
-#else
-    return true;
-#endif
 }
 bool SerialAgent::fixTemperature()
 {
-#ifndef DEBUG_APP
     if (Serial.available() > 0)
     {
         int msg = Serial.parseInt();
         return msg == 2;
     }
     return false;
-#else
-    return true;
-#endif
 }
