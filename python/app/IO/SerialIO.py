@@ -36,11 +36,10 @@ class SerialIO(InterfaceIO):
             while self.running:
                 line = ser.readline().decode('utf-8').strip()
                 if line and line != "W" and line != "T":
-                    print(line)
                     readQueue.put(self.formatMessage(line))
-                    while not messageQueue.empty():
-                        message = f"{messageQueue.get()}"
-                        ser.write(message.encode("utf-8"))
+                while not messageQueue.empty():
+                    message = f"{messageQueue.get()}"
+                    ser.write(message.encode("utf-8"))
     
     
         

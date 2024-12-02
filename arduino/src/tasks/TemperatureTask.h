@@ -11,6 +11,7 @@ class TemperatureTask : public Task
 private:
     AppController *controller;
     unsigned long initialMillisecOverTemperature = 0;
+    int temp_capper = 0;
 
 public:
     TemperatureTask(AppController *controller);
