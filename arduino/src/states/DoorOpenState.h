@@ -20,14 +20,10 @@ public:
         }
         else
         {
-            if (controller->wasteDetector->hasChanged() && controller->stateMachineTask->getCurrentStateIterationAmount() % 5 == 0)
+            if (controller->wasteDetector->hasChanged())
             {
                 auto wasteLevelPercentage = controller->wasteDetector->getFullPercentage();
                 controller->triggerEvent(new WasteUpdateEvent(wasteLevelPercentage));
-            }
-            if (controller->wasteDetector->getFullPercentage() == 100)
-            {
-                controller->stateMachineTask->changeState(Full);
             }
         }
     }

@@ -24,9 +24,9 @@ function addNotification(type, message) {
 
 function setFluidSeverity(val) {
   severityFluid = val;
-  document.getElementById("BtnLevel").style.display = severityFluid
-    ? "block"
-    : "none";
+  if(severityFluid){
+    document.getElementById("BtnLevel").style.display ="block";
+  }
   severityFluid && addNotification("warning", "Fluid level is at 100%")
 }
 
@@ -151,10 +151,12 @@ function initializeWebChannel() {
 
   document.getElementById("BtnLevel").addEventListener("click", () => {
     sendMessageToPython("1")
+    document.getElementById("BtnLevel").style.display ="none";
   }
   );
   document.getElementById("BtnTemp").addEventListener("click", () => {  
     sendMessageToPython("2")
+    document.getElementById("BtnTemp").style.display ="none";
   });
 }
 
@@ -188,11 +190,13 @@ function sendMessageToPython(message) {
 }
 
 function receiveMessageFromPython(message) {
-  updateValue({
-    fluidLevel: getFluidLevelFromJson(message),
-    temperature: getTemperatureFromJson(message),
-  });
-  getNotificationsFromJson(message);
+  if (message != null && message != undefined) {
+    updateValue({
+      fluidLevel: getFluidLevelFromJson(message),
+      temperature: getTemperatureFromJson(message),
+    });
+    getNotificationsFromJson(message);
+  }
   
 }
 
@@ -227,7 +231,9 @@ function updateValue(value) {
 
 function setSeverityTemp(val){
   severityTemp = val;
-  document.getElementById("BtnTemp").style.display = severityTemp ? "block" : "none";
+  if(severityTemp){
+    document.getElementById("BtnTemp").style.display ="block";
+  }
   severityTemp && addNotification("warning", "Temperature is too high");
 }
 

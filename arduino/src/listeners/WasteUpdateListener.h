@@ -10,8 +10,12 @@ class WasteUpdateListener : public Listener
     {
         WasteUpdateEvent *wasteEvent = static_cast<WasteUpdateEvent *>(event);
         AppController *appController = static_cast<AppController *>(controller);
-        if (appController->stateMachineTask->getCurrentState() == DoorOpen)
+        if (appController->stateMachineTask->getCurrentState() == DoorOpen){
             appController->serial->updateWasteLevel(wasteEvent->getPercentage());
+            if (wasteEvent->getPercentage() == 100){
+                appController->stateMachineTask->changeState(Full);
+            }
+        }
     }
 };
 

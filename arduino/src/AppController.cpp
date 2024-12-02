@@ -43,7 +43,7 @@ void AppController::setup()
     stateMachineTask = new StateMachineTask(this);
     stateMachineTask->init(100);
     temperatureTask = new TemperatureTask(this);
-    temperatureTask->init(500);
+    temperatureTask->init(1000);
 
     this->stateMachineTask->changeState(Available);
 

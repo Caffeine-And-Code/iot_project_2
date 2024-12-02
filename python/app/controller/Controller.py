@@ -34,3 +34,6 @@ class Controller:
     
     def sendMessageToSerial(self, message):
         self.serialIO.sendMessage(message)
+        
+    def close(self):
+        self.serialIO.close()

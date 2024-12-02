@@ -12,7 +12,6 @@ class WebViewBuilder:
     def __init__(self, Controller):
         self.url = ""
         self.title = ""
-        self.onNewMessage = lambda x: print(x)
         self.jsListenFunction = "receiveMessageFromPython"
         self.window = None
         self.browser = None
@@ -24,6 +23,11 @@ class WebViewBuilder:
         rect = app.primaryScreen().availableGeometry()        
         self.geometry = {"ax":0, "ay":0, "aw":rect.width(), "ah":rect.height() }
         self.Controller = Controller
+        self.onNewMessage = lambda x: print(x)
+
+    def serialPrint(self, message):
+        print(message)
+        self.Controller.sendMessageToSerial(message)
 
     def setUrlFromLocalFile(self, url):
         self.url = QUrl.fromLocalFile(url)
@@ -69,7 +73,7 @@ class WebViewBuilder:
         self.initialized = True
         
         app.exec_()
-        self.Controller.serialIO.close()
+        self.Controller.close()
 
         return self
     

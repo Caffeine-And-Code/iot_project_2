@@ -11,6 +11,6 @@ class Config:
     def __init__(self):
         load_dotenv()
         self.debug = os.getenv("DEBUG") or False
-        self.serialPort = os.getenv("SERIAL_PORT") or "COM3"
+        self.serialPort = os.getenv("SERIAL_PORT") or "COM17"
         self.baudRate = os.getenv("BAUD_RATE") or 9600
         self.useVirtualSerial = os.getenv("USE_VIRTUAL_SERIAL") or False

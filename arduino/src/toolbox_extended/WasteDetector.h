@@ -5,7 +5,7 @@
 #include "config/Config.h"
 #include "ChangeNotifier.h"
 
-class WasteDetector : UltrasoundProximity, ChangeNotifier
+class WasteDetector : UltrasoundProximity
 {
 private:
     short lastValue = -1;

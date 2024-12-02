@@ -10,7 +10,8 @@ void TemperatureTask::tick()
         return;
     }
     
-    if (appController->temperature->getTemperature() < MAX_TEMP)
+    auto temperature = appController->temperature->getTemperature();
+    if (temperature < MAX_TEMP)
     {
         this->initialMillisecOverTemperature = millis();
     }
@@ -18,7 +19,10 @@ void TemperatureTask::tick()
     if (this->initialMillisecOverTemperature + (MAX_TEMP_TIME_SECONDS * 1000) <= millis())
     {
         appController->stateMachineTask->changeState(MaxTemperature);
+        appController->serial->temperatureError();
     }
+
+    appController->serial->updateTemperature(temperature);
 }
 
 void TemperatureTask::reset()
