@@ -26,6 +26,4 @@
 
 #define STATE_MACHINE_FRESH_RATE 100
 
-// #define DEBUG_APP
-
 #endif
