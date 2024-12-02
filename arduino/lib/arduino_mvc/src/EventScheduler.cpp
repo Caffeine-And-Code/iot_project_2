@@ -46,6 +46,8 @@ void EventScheduler::trigger()
                     this->scheduler[i]->listener->execute(event, this->controller);
                 }
             }
+            delete event;
+            event = nullptr;
         }
     }
 }

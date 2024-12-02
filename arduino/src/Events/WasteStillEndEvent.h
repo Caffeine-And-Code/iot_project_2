@@ -10,6 +10,7 @@ public:
     {
         return this->EventID;
     }
+    ~WasteStillEndEvent() override {}
 };
 
 #endif

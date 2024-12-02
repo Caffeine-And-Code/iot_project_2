@@ -6732,7 +6732,7 @@
             metadata = metasets[i].data;
             for (j = 0, jlen = metadata.length; j < jlen; ++j) {
                 element = metadata[j];
-                if (!element._view.skip) {
+                if (element._view != undefined && !element._view.skip) {
                     handler(element);
                 }
             }

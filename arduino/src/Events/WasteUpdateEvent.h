@@ -20,6 +20,7 @@ public:
     {
         return this->EventID;
     }
+    ~WasteUpdateEvent() override {}
 };
 
 #endif

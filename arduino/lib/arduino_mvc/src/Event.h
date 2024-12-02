@@ -11,6 +11,7 @@ public:
         return 0;
     }
     bool isEvent(short id);
+    virtual ~Event() {}
 };
 
 #endif

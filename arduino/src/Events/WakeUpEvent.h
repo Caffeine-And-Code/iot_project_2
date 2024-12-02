@@ -10,6 +10,8 @@ public:
     {
         return this->EventID;
     }
+
+    ~WakeUpEvent() override {}
 };
 
 #endif
