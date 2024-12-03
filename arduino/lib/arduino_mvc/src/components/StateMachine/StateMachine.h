@@ -1,6 +1,6 @@
 #ifndef __STATE_MACHINE__
 #define __STATE_MACHINE__
-#define MAX_STATES 50
+#define MAX_STATES 30
 #include "Task.h"
 #include "ChangeStateEvent.h"
 #include "Controller.h"

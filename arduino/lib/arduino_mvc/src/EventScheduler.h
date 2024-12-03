@@ -1,7 +1,7 @@
 #ifndef __EVENT_SCHEDULER__
 #define __EVENT_SCHEDULER__
-#define MAX_SCHEDULER 50
-#define MAX_EVENTS 50
+#define MAX_SCHEDULER 30
+#define MAX_EVENTS 30
 #include "Controller.h"
 #include "EventAssociation.h"
 #include "Listener.h"

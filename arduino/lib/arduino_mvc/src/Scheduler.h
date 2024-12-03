@@ -3,7 +3,7 @@
 
 #include "Task.h"
 #include "components/timer/Timer.h"
-#define MAX_TASKS 50
+#define MAX_TASKS 30
 
 class Timer;
 
