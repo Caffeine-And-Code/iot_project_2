@@ -16,7 +16,7 @@ public:
         {
             controller->door->reverseOpen();
             delay(T3);
-            Serial.print(String(0) + "W\n");
+            controller->serial->updateWasteLevel(0);
             controller->stateMachineTask->changeState(Available);
         }
     }
